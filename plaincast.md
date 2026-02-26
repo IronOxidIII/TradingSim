@@ -31,3 +31,11 @@ TradingSim - мобильное приложение для людей(или р
 - Графики должны поддерживать масштаб 1m и 1h и 1d.
 
 </details>
+
+<details>
+<summary><b>Диаграмма проекта</b></summary>
+
+<img width="3704" height="4268" alt="4d0c650173895f416b93559719ccabbe" src="https://github.com/user-attachments/assets/d51cbf07-bcb8-4537-8005-22671aee0127" />
+
+
+</details>
