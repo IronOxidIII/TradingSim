@@ -1,0 +1,48 @@
+package com.tradingsim.client.feature.trading.chart;
+
+import android.graphics.Color;
+
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.tradingsim.client.domain.model.TradingAsset;
+
+import java.util.ArrayList;
+import java.math.BigDecimal;
+public class TradingChartRenderer
+        implements ChartRenderer {
+
+    private static final String CHART_DESCRIPTION = "График цены";
+
+    @Override
+    public void render(LineChart lineChart, TradingAsset asset) {
+
+        ArrayList<Entry> entries = new ArrayList<>();
+
+        BigDecimal[] prices = asset.getChartPrices();
+
+        for (int i = 0; i < prices.length; i++) {
+            entries.add(new Entry(i, prices[i].floatValue()));
+        }
+
+        LineDataSet dataSet = new LineDataSet(entries, asset.getSymbol());
+
+        dataSet.setColor(Color.GREEN);
+        dataSet.setValueTextColor(Color.WHITE);
+        dataSet.setLineWidth(3f);
+        dataSet.setCircleColor(Color.GREEN);
+
+        LineData lineData = new LineData(dataSet);
+
+        lineChart.setData(lineData);
+
+        Description description = new Description();
+        description.setText(CHART_DESCRIPTION);
+
+        lineChart.setDescription(description);
+
+        lineChart.invalidate();
+    }
+}
