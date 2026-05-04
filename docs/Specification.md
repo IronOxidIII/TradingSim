@@ -29,17 +29,17 @@
   - RESPONSE_BODY:
   ```json lines
   {
-    "assets": {
-      "asset": {
-        "id":  int,
-        "name": string,
-        "price_history": {
-          "time": datetime,
-          "price": double,
-          "volume": int
-        },
-      },
-    }
+    "assets": [
+    {
+      "id":  int,
+      "name": string,
+      "price_history": [
+      {
+        "time": datetime,
+        "price": double,
+        "volume": int
+      }]
+    }]
   }
   ```
 - POST = Создать новый актив
@@ -59,11 +59,12 @@
     "asset": {
       "id":  int,
       "name": string,
-      "price_history": {
+      "price_history": [
+      {
         "time": datetime,
         "price": double,
         "volume": int
-      }
+      }]
     }
   }
   ```
@@ -95,14 +96,13 @@
   - RESPONSE_BODY:
   ```json lines
   {
-    "price_histories": {
-      "price_history": {
-        "asset_id": int,
-        "time": datetime,
-        "price": double,
-        "volume": int
-      },
-    }
+    "price_histories": [
+    {
+      "asset_id": int,
+      "time": datetime,
+      "price": double,
+      "volume": int
+    }]
   }
   ```
 
@@ -111,11 +111,12 @@
   - RESPONSE_BODY:
   ```json lines
   {
-    "price_history": {
+    "price_history": [
+    {
       "time": datetime,
       "price": double,
       "volume": int
-    }
+    }]
   }
   ```
 - POST = Добавить запись в цену актива
@@ -136,23 +137,21 @@
   - RESPONSE_BODY:
   ```json lines
   {
-    "users": {
-      "user": {
-        "id":  int,
-        "username": string,
-        "portfolio": {
-          "user_id":  int,
-          "start_sum": int,
-          "total_sum": double,
-          "portfolio_assets": {
-            "portfolio_asset": {
-              "asset_id": int,
-              "amount": double
-            },
-          }
-        },
-      },
-    }
+    "users": [
+    {
+      "id":  int,
+      "username": string,
+      "portfolio": {
+        "user_id":  int,
+        "start_sum": int,
+        "total_sum": double,
+        "portfolio_assets": [
+        {
+          "asset_id": int,
+          "amount": double
+        }]
+      }
+    }]
   }
   ```
 - POST = Создать нового пользователя
@@ -173,12 +172,11 @@
         "user_id":  int,
         "start_sum": int,
         "total_sum": double,
-        "portfolio_assets": {
-          "portfolio_asset": {
-            "asset_id": int,
-            "amount": double
-          },
-        }
+        "portfolio_assets": [
+        {
+          "asset_id": int,
+          "amount": double
+        }]
       }
     }
   }
@@ -197,37 +195,35 @@
         "user_id":  int,
         "start_sum": int,
         "total_sum": double,
-        "portfolio_assets": {
-          "portfolio_asset": {
-            "asset_id": int,
-            "amount": double
-          },
-        }
+        "portfolio_assets": [
+        {
+          "asset_id": int,
+          "amount": double
+        }]
       }
     },
   }
   ```
 - DELETE = удалить пользователя
   - RESPONSE_BODY:
-    ```json lines
-    {
-      "user": {
-        "id":  int,
-        "username": string,
-        "portfolio": {
-          "user_id":  int,
-          "start_sum": int,
-          "total_sum": double,
-          "portfolio_assets": {
-            "portfolio_asset": {
-              "asset_id": int,
-              "amount": double
-            },
-          }
-        }
+  ```json lines
+  {
+    "user": {
+      "id":  int,
+      "username": string,
+      "portfolio": {
+        "user_id":  int,
+        "start_sum": int,
+        "total_sum": double,
+        "portfolio_assets": [
+        {
+          "asset_id": int,
+          "amount": double
+        }]
       }
-    }
-    ```
+    },
+  }
+  ```
 
 #### /Portfolios
 - GET = Получить все портфели
@@ -238,19 +234,17 @@
     - RESPONSE_BODY:
   ```json lines
   {
-    "portfolios": {
-      "portfolio": {
-        "user_id":  int,
-        "start_sum": int,
-        "total_sum": double,
-        "portfolio_assets": {
-          "portfolio_asset": {
-            "asset_id": int,
-            "amount": double
-          },
-        }
-      },
-    }
+    "portfolios": [
+    {
+      "user_id":  int,
+      "start_sum": int,
+      "total_sum": double,
+      "portfolio_assets": [
+      {
+        "asset_id": int,
+        "amount": double
+      }]
+    }]
   }
   ```
 - POST = Создать новый портфель
@@ -265,9 +259,17 @@
   - RESPONSE_BODY:
   ```json lines
   {
-    "user_id":  int,
-    "start_sum": int,
-    "total_sum": double
+    "portfolios": [
+    {
+      "user_id":  int,
+      "start_sum": int,
+      "total_sum": double,
+      "portfolio_assets": [
+      {
+        "asset_id": int,
+        "amount": double
+      }]
+    }]
   }
   ```
 
@@ -279,12 +281,11 @@
     "user_id":  int,
     "start_sum": int,
     "total_sum": double,
-    "portfolio_assets": {
-        "portfolio_asset": {
-          "asset_id": int,
-          "amount": double
-        },
-      }
+    "portfolio_assets": [
+    {
+      "asset_id": int,
+      "amount": double
+    }]
   }
   ```
 - PUT = Изменить сумму портфеля пользователя
@@ -309,12 +310,11 @@
   - RESPONSE_BODY:
     ```json lines
     {
-        "portfolio_assets": {
-          "portfolio_asset": {
-            "asset_id": int,
-            "amount": double
-          },
-        }
+      "portfolio_assets": [
+      {
+        "asset_id": int,
+        "amount": double
+      }]
     }
     ```
 - PUT = Добавить актив в активы портфеля
@@ -335,16 +335,15 @@
     - RESPONSE_BODY:
   ```json lines
   {
-    "transactions": {
-      "transaction": {
-        "user_id":  int,
-        "asset_id": int,
-        "sum": double,
-        "asset_price": double,
-        "datetime": datetime,
-        "amount": double,
-      },
-    }
+    "transactions": [
+    {
+      "user_id":  int,
+      "asset_id": int,
+      "sum": double,
+      "asset_price": double,
+      "datetime": datetime,
+      "amount": double
+    }]
   }
   ```
 - POST = Создать новую транзакцию
@@ -352,11 +351,11 @@
   ```json lines
   {
     "transaction": {
-        "user_id":  int,
-        "asset_id": int,
-        "sum": double,
-        "asset_price": double,
-        "amount": double,
+      "user_id":  int,
+      "asset_id": int,
+      "sum": double,
+      "asset_price": double,
+      "amount": double,
     }
   }
   ```
