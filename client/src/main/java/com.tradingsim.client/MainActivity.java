@@ -11,7 +11,6 @@ public class MainActivity extends AppCompatActivity {
     private Button btnPortfolio;
     private Button btnTrading;
     private Button btnHistory;
-    private Button btnCharts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

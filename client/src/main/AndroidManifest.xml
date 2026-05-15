@@ -6,12 +6,23 @@
         android:label="TradingSim"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".PortfolioActivity"/>
-        <activity android:name=".TradingActivity"/>
-        <activity android:name=".HistoryActivity"/>
+
+        <activity
+            android:name=".PortfolioActivity"
+            android:label="Портфель" />
+
+        <activity
+            android:name=".TradingActivity"
+            android:label="Торговля" />
+
+        <activity
+            android:name=".HistoryActivity"
+            android:label="История операций" />
+
         <activity
             android:name=".MainActivity"
-            android:exported="true">
+            android:exported="true"
+            android:label="TradingSim">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

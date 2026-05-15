@@ -12,7 +12,7 @@ import java.util.List;
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder> {
 
-    private List<PortfolioAsset> assets;
+    private final List<PortfolioAsset> assets;
 
     public PortfolioAdapter(List<PortfolioAsset> assets) {
         this.assets = assets;
@@ -32,9 +32,18 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.Port
         PortfolioAsset asset = assets.get(position);
 
         holder.tvAssetName.setText(asset.getSymbol());
-        holder.tvAssetAmount.setText("Количество: " + asset.getAmount());
-        holder.tvAssetPrice.setText("Цена: " + asset.getPrice() + " USDT");
-        holder.tvAssetTotal.setText("Стоимость: " + asset.getTotalValue() + " USDT");
+        holder.tvAssetAmount.setText(holder.itemView.getContext().getString(
+                R.string.portfolio_amount,
+                String.valueOf(asset.getAmount())
+        ));
+        holder.tvAssetPrice.setText(holder.itemView.getContext().getString(
+                R.string.portfolio_price,
+                String.valueOf(asset.getPrice())
+        ));
+        holder.tvAssetTotal.setText(holder.itemView.getContext().getString(
+                R.string.portfolio_total,
+                String.valueOf(asset.getTotalValue())
+        ));
     }
 
     @Override

@@ -16,8 +16,8 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.AssetViewHol
         void onAssetClick(String asset);
     }
 
-    private List<String> assets;
-    private OnAssetClickListener listener;
+    private final List<String> assets;
+    private final OnAssetClickListener listener;
 
     public AssetAdapter(List<String> assets, OnAssetClickListener listener) {
         this.assets = assets;
@@ -27,6 +27,7 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.AssetViewHol
     @NonNull
     @Override
     public AssetViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_trading_asset, parent, false);
 
@@ -35,11 +36,13 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.AssetViewHol
 
     @Override
     public void onBindViewHolder(@NonNull AssetViewHolder holder, int position) {
+
         String asset = assets.get(position);
+
         holder.tvAssetSymbol.setText(asset);
 
         holder.itemView.setOnClickListener(v -> {
-            listener.onAssetClick(asset + "/USDT");
+            listener.onAssetClick(asset);
         });
     }
 
@@ -54,6 +57,7 @@ public class AssetAdapter extends RecyclerView.Adapter<AssetAdapter.AssetViewHol
 
         public AssetViewHolder(@NonNull View itemView) {
             super(itemView);
+
             tvAssetSymbol = itemView.findViewById(R.id.tvAssetSymbol);
         }
     }

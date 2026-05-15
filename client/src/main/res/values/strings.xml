@@ -1,0 +1,5 @@
+<resources>
+    <string name="portfolio_amount">Количество: %1$s</string>
+    <string name="portfolio_price">Цена: %1$s USDT</string>
+    <string name="portfolio_total">Стоимость: %1$s USDT</string>
+</resources>
