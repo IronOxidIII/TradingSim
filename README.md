@@ -10,3 +10,14 @@ Main features of this app - Trading without risks(and profit). So:
 
 Done with:
 Java (at last in development)
+
+Как запустить проект:
+Требования(Android Studio, JDK 17+, Android SDK 27+)
+Запуск:
+Клонировать репозиторий:
+git clone https://github.com/IronOxidIII/TradingSim
+Открыть проект в Android Studio
+Дождаться Gradle Sync
+Запустить Android Emulator или подключить Android-устройство
+Выбрать модуль client.
+Нажать кнопку Run ▶.
