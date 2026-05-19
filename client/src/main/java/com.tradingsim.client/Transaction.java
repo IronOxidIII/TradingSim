@@ -1,32 +1,44 @@
 package com.tradingsim.client;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
 public class Transaction {
 
-    private String type;
-    private double amount;
-    private double price;
-    private String date;
+    private final String type;
+    private final BigDecimal amount;
+    private final BigDecimal price;
+    private final LocalDateTime dateTime;
 
-    public Transaction(String type, double amount, double price, String date) {
+    public Transaction(
+            String type,
+            BigDecimal amount,
+            BigDecimal price,
+            LocalDateTime dateTime
+    ) {
         this.type = type;
         this.amount = amount;
         this.price = price;
-        this.date = date;
+        this.dateTime = dateTime;
     }
 
     public String getType() {
         return type;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public String getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public BigDecimal getTotal() {
+        return amount.multiply(price);
     }
 }

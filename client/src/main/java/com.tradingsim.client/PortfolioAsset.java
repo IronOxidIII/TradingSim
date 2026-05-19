@@ -1,12 +1,18 @@
 package com.tradingsim.client;
 
+import java.math.BigDecimal;
+
 public class PortfolioAsset {
 
-    private String symbol;
-    private double amount;
-    private double price;
+    private final String symbol;
+    private final BigDecimal amount;
+    private final BigDecimal price;
 
-    public PortfolioAsset(String symbol, double amount, double price) {
+    public PortfolioAsset(
+            String symbol,
+            BigDecimal amount,
+            BigDecimal price
+    ) {
         this.symbol = symbol;
         this.amount = amount;
         this.price = price;
@@ -16,15 +22,15 @@ public class PortfolioAsset {
         return symbol;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public double getTotalValue() {
-        return amount * price;
+    public BigDecimal getTotalValue() {
+        return amount.multiply(price);
     }
 }

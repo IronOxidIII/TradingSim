@@ -4,7 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import java.time.format.DateTimeFormatter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -34,9 +34,25 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         Transaction transaction = transactions.get(position);
 
         holder.tvType.setText(transaction.getType());
-        holder.tvAmount.setText("Количество: " + transaction.getAmount());
-        holder.tvPrice.setText("Цена: " + transaction.getPrice() + " USDT");
-        holder.tvDate.setText(transaction.getDate());
+        holder.tvAmount.setText(
+                holder.itemView.getContext().getString(
+                        R.string.transaction_amount,
+                        transaction.getAmount().toString()
+                )
+        );
+
+        holder.tvPrice.setText(
+                holder.itemView.getContext().getString(
+                        R.string.transaction_price,
+                        transaction.getPrice().toString()
+                )
+        );
+        DateTimeFormatter formatter =
+                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+        holder.tvDate.setText(
+                transaction.getDateTime().format(formatter)
+        );
     }
 
     @Override

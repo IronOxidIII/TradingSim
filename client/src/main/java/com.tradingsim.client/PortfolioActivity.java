@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class PortfolioActivity extends AppCompatActivity {
@@ -24,13 +25,14 @@ public class PortfolioActivity extends AppCompatActivity {
         recyclerPortfolio = findViewById(R.id.recyclerPortfolio);
 
         assets = new ArrayList<>();
-        assets.add(new PortfolioAsset("BTC", 0.25, 65000));
-        assets.add(new PortfolioAsset("ETH", 2.0, 3500));
-        assets.add(new PortfolioAsset("SOL", 15.0, 140));
+        assets.add(new PortfolioAsset("BTC", new BigDecimal("0.25"), new BigDecimal("65000")));
+        assets.add(new PortfolioAsset("ETH", new BigDecimal("2.0"), new BigDecimal("3500")));
+        assets.add(new PortfolioAsset("SOL", new BigDecimal("15.0"), new BigDecimal("140")));
 
-        double totalValue = 0;
+        BigDecimal totalValue = BigDecimal.ZERO;
+
         for (PortfolioAsset asset : assets) {
-            totalValue += asset.getTotalValue();
+            totalValue = totalValue.add(asset.getTotalValue());
         }
 
         tvPortfolioValue.setText("Стоимость портфеля: " + totalValue + " USDT");

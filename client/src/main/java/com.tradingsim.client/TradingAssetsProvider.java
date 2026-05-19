@@ -1,10 +1,12 @@
 package com.tradingsim.client;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class TradingAssetsProvider {
-
+    private TradingAssetsProvider() {
+        throw new IllegalStateException("Utility class");
+    }
     public static final String BTC_USDT = "BTC/USDT";
     public static final String ETH_USDT = "ETH/USDT";
     public static final String SOL_USDT = "SOL/USDT";
@@ -12,16 +14,14 @@ public class TradingAssetsProvider {
     public static final String XRP_USDT = "XRP/USDT";
     public static final String DOGE_USDT = "DOGE/USDT";
 
-    public static ArrayList<String> getAssetSymbols() {
-        return new ArrayList<>(
-                Arrays.asList(
-                        BTC_USDT,
-                        ETH_USDT,
-                        SOL_USDT,
-                        BNB_USDT,
-                        XRP_USDT,
-                        DOGE_USDT
-                )
+    public static List<String> getAssetSymbols() {
+        return Arrays.asList(
+                BTC_USDT,
+                ETH_USDT,
+                SOL_USDT,
+                BNB_USDT,
+                XRP_USDT,
+                DOGE_USDT
         );
     }
 

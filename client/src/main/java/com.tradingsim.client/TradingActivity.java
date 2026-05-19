@@ -1,12 +1,14 @@
 package com.tradingsim.client;
 
-import androidx.lifecycle.ViewModelProvider;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,8 +17,6 @@ import com.github.mikephil.charting.charts.LineChart;
 public class TradingActivity extends AppCompatActivity {
 
     private TradingViewModel viewModel;
-    private static final String BUY_OPERATION = "покупка";
-    private static final String SELL_OPERATION = "продажа";
 
     private TextView tvSelectedAsset;
     private TextView tvAssetPrice;
@@ -27,8 +27,6 @@ public class TradingActivity extends AppCompatActivity {
     private Button btnSell;
     private LineChart lineChart;
 
-    private String currentAsset = TradingAssetsProvider.BTC_USDT;
-
     private final TradingChartRenderer chartRenderer = new TradingChartRenderer();
     private final TradeActionHandler tradeActionHandler = new TradeActionHandler();
 
@@ -36,19 +34,14 @@ public class TradingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trading);
+
         viewModel = new ViewModelProvider(this).get(TradingViewModel.class);
 
         bindViews();
         setupAssetList();
         setupListeners();
-        viewModel.getSelectedAsset().observe(this, this::updateAsset);
-        viewModel.getAmount().observe(this, value -> {
-            etAmount.setText(value);
-        });
-
-        viewModel.getLeverage().observe(this, value -> {
-            etLeverage.setText(value);
-        });
+        setupTextWatchers();
+        observeViewModel();
     }
 
     private void bindViews() {
@@ -76,28 +69,78 @@ public class TradingActivity extends AppCompatActivity {
     }
 
     private void setupListeners() {
-        btnBuy.setOnClickListener(v -> handleTradeAction(BUY_OPERATION));
-        btnSell.setOnClickListener(v -> handleTradeAction(SELL_OPERATION));
+        btnBuy.setOnClickListener(
+                v -> handleTradeAction(getString(R.string.buy_operation))
+        );
+
+        btnSell.setOnClickListener(
+                v -> handleTradeAction(getString(R.string.sell_operation))
+        );
+    }
+
+    private void setupTextWatchers() {
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                viewModel.setAmount(s.toString());
+            }
+        });
+
+        etLeverage.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                viewModel.setLeverage(s.toString());
+            }
+        });
+    }
+
+    private void observeViewModel() {
+        viewModel.getSelectedAsset().observe(this, this::updateAsset);
+
+        viewModel.getAmount().observe(this, value -> {
+            if (!etAmount.getText().toString().equals(value)) {
+                etAmount.setText(value);
+            }
+        });
+
+        viewModel.getLeverage().observe(this, value -> {
+            if (!etLeverage.getText().toString().equals(value)) {
+                etLeverage.setText(value);
+            }
+        });
     }
 
     private void updateAsset(String assetSymbol) {
         TradingAsset asset = TradingAssetsProvider.getAssetBySymbol(assetSymbol);
 
-        currentAsset = asset.getSymbol();
         tvSelectedAsset.setText(asset.getDisplaySymbol());
         tvAssetPrice.setText(asset.getPriceText());
         chartRenderer.render(lineChart, asset);
     }
 
     private void handleTradeAction(String type) {
-        viewModel.setAmount(etAmount.getText().toString());
-        viewModel.setLeverage(etLeverage.getText().toString());
         tradeActionHandler.handle(
                 this,
                 type,
-                currentAsset,
-                etAmount.getText().toString(),
-                etLeverage.getText().toString()
+                viewModel.getSelectedAsset().getValue(),
+                viewModel.getAmount().getValue(),
+                viewModel.getLeverage().getValue()
         );
     }
 }
