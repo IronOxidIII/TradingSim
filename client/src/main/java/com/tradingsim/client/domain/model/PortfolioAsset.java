@@ -1,4 +1,4 @@
-package com.tradingsim.client;
+package com.tradingsim.client.domain.model;
 
 import java.math.BigDecimal;
 

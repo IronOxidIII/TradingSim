@@ -1,4 +1,4 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.trading;
 
 import android.graphics.Color;
 
@@ -7,13 +7,16 @@ import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.tradingsim.client.domain.model.TradingAsset;
 
 import java.util.ArrayList;
 
-public class TradingChartRenderer {
+public class TradingChartRenderer
+        implements ChartRenderer {
 
     private static final String CHART_DESCRIPTION = "График цены";
 
+    @Override
     public void render(LineChart lineChart, TradingAsset asset) {
 
         ArrayList<Entry> entries = new ArrayList<>();

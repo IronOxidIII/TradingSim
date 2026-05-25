@@ -1,4 +1,6 @@
-package com.tradingsim.client;
+package com.tradingsim.client.data.local;
+
+import com.tradingsim.client.domain.model.TradingAsset;
 
 import java.util.Arrays;
 import java.util.List;

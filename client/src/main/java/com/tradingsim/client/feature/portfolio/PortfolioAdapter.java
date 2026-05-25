@@ -1,4 +1,4 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.portfolio;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +7,9 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.tradingsim.client.R;
+import com.tradingsim.client.domain.model.PortfolioAsset;
 
 import java.util.List;
 

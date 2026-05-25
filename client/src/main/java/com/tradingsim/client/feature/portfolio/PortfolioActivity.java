@@ -1,4 +1,4 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.portfolio;
 
 import android.os.Bundle;
 import android.widget.TextView;
@@ -7,10 +7,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tradingsim.client.R;
+import com.tradingsim.client.data.repository.InMemoryPortfolioRepository;
+import com.tradingsim.client.data.repository.PortfolioRepository;
+import com.tradingsim.client.domain.model.PortfolioAsset;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class PortfolioActivity extends AppCompatActivity {
+
+    private final PortfolioRepository repository =
+            new InMemoryPortfolioRepository();
 
     private TextView tvPortfolioValue;
     private RecyclerView recyclerPortfolio;
@@ -24,10 +32,7 @@ public class PortfolioActivity extends AppCompatActivity {
         tvPortfolioValue = findViewById(R.id.tvPortfolioValue);
         recyclerPortfolio = findViewById(R.id.recyclerPortfolio);
 
-        assets = new ArrayList<>();
-        assets.add(new PortfolioAsset("BTC", new BigDecimal("0.25"), new BigDecimal("65000")));
-        assets.add(new PortfolioAsset("ETH", new BigDecimal("2.0"), new BigDecimal("3500")));
-        assets.add(new PortfolioAsset("SOL", new BigDecimal("15.0"), new BigDecimal("140")));
+        assets = new ArrayList<>(repository.getPortfolioAssets());
 
         BigDecimal totalValue = BigDecimal.ZERO;
 

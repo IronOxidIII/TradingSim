@@ -8,19 +8,19 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
 
         <activity
-            android:name=".PortfolioActivity"
+            android:name=".feature.portfolio.PortfolioActivity"
             android:label="Портфель" />
 
         <activity
-            android:name=".TradingActivity"
+            android:name=".feature.trading.TradingActivity"
             android:label="Торговля" />
 
         <activity
-            android:name=".HistoryActivity"
+            android:name=".feature.history.HistoryActivity"
             android:label="История операций" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".feature.main.MainActivity"
             android:exported="true"
             android:label="TradingSim">
 

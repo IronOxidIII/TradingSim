@@ -1,10 +1,15 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.main;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.tradingsim.client.feature.history.HistoryActivity;
+import com.tradingsim.client.feature.portfolio.PortfolioActivity;
+import com.tradingsim.client.R;
+import com.tradingsim.client.feature.trading.TradingActivity;
 
 public class MainActivity extends AppCompatActivity {
 

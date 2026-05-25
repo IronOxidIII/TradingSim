@@ -1,4 +1,4 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.trading;
 
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,12 +12,15 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tradingsim.client.data.repository.InMemoryTradingRepository;
+import com.tradingsim.client.data.repository.TradingRepository;
 import com.github.mikephil.charting.charts.LineChart;
+import com.tradingsim.client.R;
+import com.tradingsim.client.domain.model.TradingAsset;
 
 public class TradingActivity extends AppCompatActivity {
 
     private TradingViewModel viewModel;
-
     private TextView tvSelectedAsset;
     private TextView tvAssetPrice;
     private RecyclerView recyclerAssets;
@@ -27,15 +30,26 @@ public class TradingActivity extends AppCompatActivity {
     private Button btnSell;
     private LineChart lineChart;
 
-    private final TradingChartRenderer chartRenderer = new TradingChartRenderer();
-    private final TradeActionHandler tradeActionHandler = new TradeActionHandler();
+    private final ChartRenderer chartRenderer =
+            new TradingChartRenderer();
+    private final TradeActionProcessor tradeActionHandler =
+            new TradeActionHandler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trading);
 
-        viewModel = new ViewModelProvider(this).get(TradingViewModel.class);
+        TradingRepository repository =
+                new InMemoryTradingRepository();
+
+        TradingViewModelFactory factory =
+                new TradingViewModelFactory(repository);
+
+        viewModel = new ViewModelProvider(
+                this,
+                factory
+        ).get(TradingViewModel.class);
 
         bindViews();
         setupAssetList();
@@ -57,7 +71,7 @@ public class TradingActivity extends AppCompatActivity {
 
     private void setupAssetList() {
         AssetAdapter adapter = new AssetAdapter(
-                TradingAssetsProvider.getAssetSymbols(),
+                viewModel.getAssetSymbols(),
                 asset -> viewModel.selectAsset(asset)
         );
 
@@ -127,7 +141,7 @@ public class TradingActivity extends AppCompatActivity {
     }
 
     private void updateAsset(String assetSymbol) {
-        TradingAsset asset = TradingAssetsProvider.getAssetBySymbol(assetSymbol);
+        TradingAsset asset = viewModel.getAssetBySymbol(assetSymbol);
 
         tvSelectedAsset.setText(asset.getDisplaySymbol());
         tvAssetPrice.setText(asset.getPriceText());

@@ -1,14 +1,16 @@
-package com.tradingsim.client;
+package com.tradingsim.client.feature.trading;
 
 import android.content.Context;
 import android.widget.Toast;
 import java.math.BigDecimal;
 
-public class TradeActionHandler {
+public class TradeActionHandler
+        implements TradeActionProcessor {
 
     private static final String DEFAULT_LEVERAGE = "1";
     private static final String EMPTY_AMOUNT_MESSAGE = "Введите количество";
 
+    @Override
     public void handle(
             Context context,
             String type,
