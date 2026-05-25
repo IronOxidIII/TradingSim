@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tradingsim.client.core.ui.SimpleTextWatcher;
 import com.tradingsim.client.data.repository.InMemoryTradingRepository;
 import com.tradingsim.client.data.repository.TradingRepository;
 import com.github.mikephil.charting.charts.LineChart;
@@ -93,35 +94,24 @@ public class TradingActivity extends AppCompatActivity {
     }
 
     private void setupTextWatchers() {
-        etAmount.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+        etAmount.addTextChangedListener(
+                new SimpleTextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        viewModel.setAmount(s.toString());
+                    }
+                }
+        );
 
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.setAmount(s.toString());
-            }
-        });
-
-        etLeverage.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                viewModel.setLeverage(s.toString());
-            }
-        });
+        etLeverage.addTextChangedListener(
+                new SimpleTextWatcher() {
+                    @Override
+                    public void afterTextChanged(Editable s) {
+                        viewModel.setLeverage(s.toString());
+                    }
+                }
+        );
     }
 
     private void observeViewModel() {
@@ -144,7 +134,12 @@ public class TradingActivity extends AppCompatActivity {
         TradingAsset asset = viewModel.getAssetBySymbol(assetSymbol);
 
         tvSelectedAsset.setText(asset.getDisplaySymbol());
-        tvAssetPrice.setText(asset.getPriceText());
+        tvAssetPrice.setText(
+                getString(
+                        R.string.trading_asset_price,
+                        asset.getPrice().toString()
+                )
+        );
         chartRenderer.render(lineChart, asset);
     }
 

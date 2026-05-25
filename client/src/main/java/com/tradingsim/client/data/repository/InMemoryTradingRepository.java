@@ -5,15 +5,19 @@ import com.tradingsim.client.domain.model.TradingAsset;
 
 import java.util.List;
 
-public class InMemoryTradingRepository implements TradingRepository {
+public class InMemoryTradingRepository
+        implements TradingRepository {
+
+    private final TradingAssetsProvider provider =
+            new TradingAssetsProvider();
 
     @Override
     public List<String> getAssetSymbols() {
-        return TradingAssetsProvider.getAssetSymbols();
+        return provider.getAssetSymbols();
     }
 
     @Override
     public TradingAsset getAssetBySymbol(String symbol) {
-        return TradingAssetsProvider.getAssetBySymbol(symbol);
+        return provider.getAssetBySymbol(symbol);
     }
 }

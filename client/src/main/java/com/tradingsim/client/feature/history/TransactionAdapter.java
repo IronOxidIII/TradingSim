@@ -14,7 +14,9 @@ import com.tradingsim.client.domain.model.Transaction;
 import java.util.List;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
-
+    private static final String DATE_TIME_PATTERN = "dd.MM.yyyy HH:mm";
+    private static final DateTimeFormatter DATE_TIME_FORMATTER =
+            DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
     private List<Transaction> transactions;
 
     public TransactionAdapter(List<Transaction> transactions) {
@@ -50,11 +52,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                         transaction.getPrice().toString()
                 )
         );
-        DateTimeFormatter formatter =
-                DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
         holder.tvDate.setText(
-                transaction.getDateTime().format(formatter)
+                transaction.getDateTime().format(DATE_TIME_FORMATTER)
         );
     }
 

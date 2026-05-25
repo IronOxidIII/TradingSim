@@ -1,21 +1,23 @@
 package com.tradingsim.client.domain.model;
 
+import java.math.BigDecimal;
+
 public class TradingAsset {
 
     private final String symbol;
     private final String displaySymbol;
-    private final String priceText;
+    private final BigDecimal price;
     private final float[] chartPrices;
 
     public TradingAsset(
             String symbol,
             String displaySymbol,
-            String priceText,
+            BigDecimal price,
             float[] chartPrices
     ) {
         this.symbol = symbol;
         this.displaySymbol = displaySymbol;
-        this.priceText = priceText;
+        this.price = price;
         this.chartPrices = chartPrices;
     }
 
@@ -27,8 +29,8 @@ public class TradingAsset {
         return displaySymbol;
     }
 
-    public String getPriceText() {
-        return priceText;
+    public BigDecimal getPrice() {
+        return price;
     }
 
     public float[] getChartPrices() {

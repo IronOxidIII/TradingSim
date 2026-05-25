@@ -40,7 +40,12 @@ public class PortfolioActivity extends AppCompatActivity {
             totalValue = totalValue.add(asset.getTotalValue());
         }
 
-        tvPortfolioValue.setText("Стоимость портфеля: " + totalValue + " USDT");
+        tvPortfolioValue.setText(
+                getString(
+                        R.string.portfolio_value,
+                        totalValue.toString()
+                )
+        );
 
         PortfolioAdapter adapter = new PortfolioAdapter(assets);
         recyclerPortfolio.setLayoutManager(new LinearLayoutManager(this));

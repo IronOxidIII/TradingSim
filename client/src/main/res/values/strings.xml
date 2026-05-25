@@ -6,4 +6,11 @@
     <string name="transaction_price">Цена: %1$s USDT</string>
     <string name="buy_operation">покупка</string>
     <string name="sell_operation">продажа</string>
+    <string name="invalid_amount">Некорректное количество</string>
+    <string name="empty_amount">Введите количество</string>
+    <string name="amount_must_be_positive">Количество должно быть больше 0</string>
+    <string name="invalid_leverage">Некорректное плечо</string>
+    <string name="available_leverage">Доступное плечо: 1, 2, 5, 10</string>
+    <string name="portfolio_value">Стоимость портфеля: %1$s USDT</string>
+    <string name="trading_asset_price">Цена: %1$s USDT</string>
 </resources>

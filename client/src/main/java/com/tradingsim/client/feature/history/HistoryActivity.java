@@ -16,7 +16,6 @@ import java.util.ArrayList;
 public class HistoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerTransactions;
-    private ArrayList<Transaction> transactions;
 
     private final HistoryRepository repository =
             new InMemoryHistoryRepository();
@@ -28,9 +27,8 @@ public class HistoryActivity extends AppCompatActivity {
 
         recyclerTransactions = findViewById(R.id.recyclerTransactions);
 
-        transactions = new ArrayList<>(
-                repository.getTransactions()
-        );
+        ArrayList<Transaction> transactions =
+                new ArrayList<>(repository.getTransactions());
 
         TransactionAdapter adapter = new TransactionAdapter(transactions);
 
