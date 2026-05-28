@@ -1,4 +1,4 @@
 package com.tradingsim.controller;
 
-public class AssetController {
+public interface AssetController {
 }

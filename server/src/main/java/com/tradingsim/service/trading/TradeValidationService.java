@@ -1,10 +1,16 @@
 package com.tradingsim.service.trading;
 
+import com.tradingsim.exception.InsufficientFundsException;
+import com.tradingsim.exception.NotFoundException;
+import com.tradingsim.exception.TradingException;
+import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Portfolio;
 import com.tradingsim.model.PortfolioAsset;
 import com.tradingsim.repository.AssetRepository;
 import com.tradingsim.repository.UserRepository;
 import com.tradingsim.service.portfolio.PortfolioService;
+
+import java.math.BigDecimal;
 
 public class TradeValidationService {
 
@@ -25,34 +31,34 @@ public class TradeValidationService {
     private void validateCommon(
             int userId,
             int assetId,
-            double amount
+            BigDecimal amount
     ) {
         if (userId <= 0) {
-            throw new IllegalArgumentException(
+            throw new ValidationException(
                     "User id must be positive"
             );
         }
 
         if (assetId <= 0) {
-            throw new IllegalArgumentException(
+            throw new ValidationException(
                     "Asset id must be positive"
             );
         }
 
-        if (amount <= 0) {
-            throw new IllegalArgumentException(
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValidationException(
                     "Amount must be positive"
             );
         }
 
         if (userRepository.findById(userId).isEmpty()) {
-            throw new IllegalArgumentException(
+            throw new NotFoundException(
                     "User does not exist"
             );
         }
 
         if (assetRepository.findById(assetId).isEmpty()) {
-            throw new IllegalArgumentException(
+            throw new NotFoundException(
                     "Asset does not exist"
             );
         }
@@ -61,28 +67,28 @@ public class TradeValidationService {
     public void validateBuy(
             int userId,
             int assetId,
-            double amount,
-            double totalCost
+            BigDecimal amount,
+            BigDecimal totalCost
     ) {
         validateCommon(userId, assetId, amount);
 
-        if (totalCost <= 0) {
-            throw new IllegalArgumentException(
+        if (totalCost.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ValidationException(
                     "Total cost must be positive"
             );
         }
 
         Portfolio portfolio = portfolioService.getPortfolioByUserId(userId);
 
-        if (portfolio.getCashBalance() < totalCost) {
-            throw new IllegalArgumentException("Not enough cash");
+        if (portfolio.getCashBalance().compareTo(totalCost) < 0) {
+            throw new InsufficientFundsException("Not enough cash");
         }
     }
 
     public void validateSell(
             int userId,
             int assetId,
-            double amount
+            BigDecimal amount
     ) {
         validateCommon(userId, assetId, amount);
 
@@ -93,13 +99,13 @@ public class TradeValidationService {
                 .filter(pa -> pa.getAssetId() == assetId)
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new NotFoundException(
                                 "Asset is not in portfolio"
                         )
                 );
 
-        if (portfolioAsset.getAmount() < amount) {
-            throw new IllegalArgumentException(
+        if (portfolioAsset.getAmount().compareTo(amount) < 0) {
+            throw new ValidationException(
                     "Not enough asset quantity"
             );
         }

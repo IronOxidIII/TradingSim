@@ -1,11 +1,15 @@
 package com.tradingsim.model;
 
+import com.tradingsim.config.MoneyConfig;
+
+import java.math.BigDecimal;
+
 public class PortfolioAsset {
 
     private int id;
     private int portfolioId;
     private int assetId;
-    private double amount;
+    private BigDecimal amount;
 
     public PortfolioAsset() {}
 
@@ -13,12 +17,15 @@ public class PortfolioAsset {
             int id,
             int portfolioId,
             int assetId,
-            double amount
+            BigDecimal amount
     ) {
         this.id = id;
         this.portfolioId = portfolioId;
         this.assetId = assetId;
-        this.amount = amount;
+        this.amount = amount.setScale(
+                MoneyConfig.ASSET_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 
     public int getId() {
@@ -45,11 +52,14 @@ public class PortfolioAsset {
         this.assetId = assetId;
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount.setScale(
+                MoneyConfig.ASSET_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 }

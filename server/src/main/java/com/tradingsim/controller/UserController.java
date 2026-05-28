@@ -1,4 +1,4 @@
 package com.tradingsim.controller;
 
-public class UserController {
+public interface UserController {
 }

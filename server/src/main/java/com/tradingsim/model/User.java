@@ -1,6 +1,8 @@
 package com.tradingsim.model;
 
-public class User {
+import com.tradingsim.repository.base.Identifiable;
+
+public class User implements Identifiable {
     private int id;
     private String username;
 

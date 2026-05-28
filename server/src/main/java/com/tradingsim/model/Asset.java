@@ -1,6 +1,8 @@
 package com.tradingsim.model;
 
-public class Asset {
+import com.tradingsim.repository.base.Identifiable;
+
+public class Asset implements Identifiable {
 
     private int id;
     private String name;

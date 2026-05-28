@@ -1,13 +1,17 @@
 package com.tradingsim.model;
 
+import com.tradingsim.config.MoneyConfig;
+import com.tradingsim.repository.base.Identifiable;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class PriceHistory {
+public class PriceHistory implements Identifiable {
 
     private int id;
     private int assetId;
     private LocalDateTime dateTime;
-    private double price;
+    private BigDecimal price;
     private int volume;
 
     public PriceHistory() {}
@@ -16,13 +20,16 @@ public class PriceHistory {
             int id,
             int assetId,
             LocalDateTime dateTime,
-            double price,
+            BigDecimal price,
             int volume
     ) {
         this.id = id;
         this.assetId = assetId;
         this.dateTime = dateTime;
-        this.price = price;
+        this.price = price.setScale(
+                MoneyConfig.MONEY_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
         this.volume = volume;
     }
 
@@ -50,12 +57,15 @@ public class PriceHistory {
         this.dateTime = dateTime;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
+    public void setPrice(BigDecimal price) {
+        this.price = price.setScale(
+                MoneyConfig.MONEY_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 
     public int getVolume() {

@@ -3,86 +3,88 @@ package com.tradingsim;
 import com.tradingsim.model.*;
 import com.tradingsim.repository.*;
 import com.tradingsim.service.market.MarketService;
+import com.tradingsim.service.market.MarketServiceImpl;
 import com.tradingsim.service.portfolio.PortfolioService;
+import com.tradingsim.service.portfolio.PortfolioServiceImpl;
 import com.tradingsim.service.statistics.StatisticService;
-import com.tradingsim.service.trading.TradeValidationService;
+import com.tradingsim.service.statistics.StatisticServiceImpl;
 import com.tradingsim.service.trading.TradingService;
+import com.tradingsim.service.trading.TradingServiceImpl;
+
+import java.math.BigDecimal;
+import java.util.logging.Logger;
 
 public class TradingSimApplication {
-    public static void main(String[] args) {
-        UserRepository userRepository = new UserRepository();
-        AssetRepository assetRepository = new AssetRepository();
-        PortfolioRepository portfolioRepository = new PortfolioRepository();
-        PriceHistoryRepository priceHistoryRepository = new PriceHistoryRepository();
-        TransactionRepository transactionRepository = new TransactionRepository();
 
-        MarketService marketService = new MarketService(
+    private static final Logger log = Logger.getLogger(TradingSimApplication.class.getName());
+
+    public static void main(String[] args) {
+        UserRepository userRepository = new UserRepositoryImpl();
+        AssetRepository assetRepository = new AssetRepositoryImpl();
+        PortfolioRepository portfolioRepository = new PortfolioRepositoryImpl();
+        PriceHistoryRepository priceHistoryRepository =
+                new PriceHistoryRepositoryImpl();
+        TransactionRepository transactionRepository =
+                new TransactionRepositoryImpl();
+
+        MarketService marketService = new MarketServiceImpl(
                 assetRepository,
                 priceHistoryRepository
         );
 
-        PortfolioService portfolioService = new PortfolioService(
+        PortfolioService portfolioService = new PortfolioServiceImpl(
                 portfolioRepository,
                 assetRepository,
                 priceHistoryRepository,
                 userRepository
         );
 
-        TradeValidationService tradeValidationService = new TradeValidationService(
-                portfolioService,
-                userRepository,
-                assetRepository
-        );
-
-        TradingService tradingService = new TradingService(
+        TradingService tradingService = new TradingServiceImpl(
                 portfolioService,
                 marketService,
-                tradeValidationService,
+                portfolioRepository,
                 transactionRepository
         );
 
-        StatisticService statisticService = new StatisticService(
+        StatisticService statisticService = new StatisticServiceImpl(
                 portfolioService,
                 marketService,
                 transactionRepository
         );
 
         User user = new User();
-        user.setId(1);
         user.setUsername("Test User");
-        userRepository.save(user);
+        userRepository.create(user);
 
         Asset btc = new Asset();
-        btc.setId(1);
         btc.setName("BTC");
-        assetRepository.save(btc);
+        assetRepository.create(btc);
 
         Asset eth = new Asset();
-        eth.setId(2);
         eth.setName("ETH");
-        assetRepository.save(eth);
+        assetRepository.create(eth);
 
         marketService.createInitialPrice(1);
         marketService.createInitialPrice(2);
 
-        portfolioService.createPortfolio(1, 10_000);
+        portfolioService.createPortfolio(1, BigDecimal.valueOf(10_000));
 
-        tradingService.buyAsset(1, 1, 2);
-        tradingService.buyAsset(1, 2, 5);
-
-        marketService.refreshAllPrices();
-
-        tradingService.sellAsset(1, 1, 1);
+        tradingService.buyAsset(1, 1, BigDecimal.valueOf(2));
+        tradingService.buyAsset(1, 2, BigDecimal.valueOf(5));
 
         marketService.refreshAllPrices();
 
-        tradingService.sellAsset(1, 1, 1);
+        tradingService.sellAsset(1, 1, BigDecimal.valueOf(1));
 
-        System.out.println("PNL: " + statisticService.getPnL(1));
-        System.out.println("RDI: " + statisticService.getRdi(1));
-        System.out.println("WinRate: " + statisticService.getWinRate(1));
-        System.out.println("Sharpe: " + statisticService.getSharpeRatio(1));
+        marketService.refreshAllPrices();
 
-        System.out.println("Done.");
+        tradingService.sellAsset(1, 1, BigDecimal.valueOf(1));
+
+        log.info(() -> "PNL: " + statisticService.getPnL(1));
+        log.info(() -> "RDI: " + statisticService.getRdi(1));
+        log.info(() -> "WinRate: " + statisticService.getWinRate(1));
+        log.info(() -> "Sharpe: " + statisticService.getSharpeRatio(1));
+
+        log.info("Done.");
     }
 }

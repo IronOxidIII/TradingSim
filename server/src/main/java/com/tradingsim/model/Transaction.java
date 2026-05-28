@@ -1,15 +1,19 @@
 package com.tradingsim.model;
 
+import com.tradingsim.config.MoneyConfig;
+import com.tradingsim.repository.base.Identifiable;
+
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class Transaction {
+public class Transaction implements Identifiable {
 
     private int id;
     private int userId;
     private int assetId;
-    private double sum;
-    private double assetPrice;
-    private double amount;
+    private BigDecimal sum;
+    private BigDecimal assetPrice;
+    private BigDecimal amount;
     private LocalDateTime dateTime;
     private TransactionType type;
 
@@ -19,18 +23,21 @@ public class Transaction {
             int id,
             int userId,
             int assetId,
-            double sum,
-            double assetPrice,
-            double amount,
+            BigDecimal sum,
+            BigDecimal assetPrice,
+            BigDecimal amount,
             LocalDateTime dateTime,
             TransactionType type
     ) {
         this.id = id;
         this.userId = userId;
         this.assetId = assetId;
-        this.sum = sum;
-        this.assetPrice = assetPrice;
-        this.amount = amount;
+        this.sum = sum
+                .setScale(MoneyConfig.MONEY_SCALE, MoneyConfig.ROUNDING_MODE);
+        this.assetPrice = assetPrice
+                .setScale(MoneyConfig.MONEY_SCALE, MoneyConfig.ROUNDING_MODE);
+        this.amount = amount
+                .setScale(MoneyConfig.ASSET_SCALE, MoneyConfig.ROUNDING_MODE);
         this.dateTime = dateTime;
         this.type = type;
     }
@@ -59,28 +66,37 @@ public class Transaction {
         this.assetId = assetId;
     }
 
-    public double getSum() {
+    public BigDecimal getSum() {
         return sum;
     }
 
-    public void setSum(double sum) {
-        this.sum = sum;
+    public void setSum(BigDecimal sum) {
+        this.sum = sum.setScale(
+                MoneyConfig.MONEY_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 
-    public double getAssetPrice() {
+    public BigDecimal getAssetPrice() {
         return assetPrice;
     }
 
-    public void setAssetPrice(double assetPrice) {
-        this.assetPrice = assetPrice;
+    public void setAssetPrice(BigDecimal assetPrice) {
+        this.assetPrice = assetPrice.setScale(
+                MoneyConfig.MONEY_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 
-    public double getAmount() {
+    public BigDecimal getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount.setScale(
+                MoneyConfig.ASSET_SCALE,
+                MoneyConfig.ROUNDING_MODE
+        );
     }
 
     public LocalDateTime getDateTime() {

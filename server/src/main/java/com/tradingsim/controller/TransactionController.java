@@ -1,4 +1,4 @@
 package com.tradingsim.controller;
 
-public class TransactionController {
+public interface TransactionController {
 }
