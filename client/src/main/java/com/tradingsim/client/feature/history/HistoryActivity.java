@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tradingsim.client.R;
-import com.tradingsim.client.data.repository.HistoryRepository;
-import com.tradingsim.client.data.repository.InMemoryHistoryRepository;
+import com.tradingsim.client.data.repository.history.HistoryRepository;
+import com.tradingsim.client.data.repository.history.InMemoryHistoryRepository;
 import com.tradingsim.client.domain.model.Transaction;
 
 import java.util.ArrayList;

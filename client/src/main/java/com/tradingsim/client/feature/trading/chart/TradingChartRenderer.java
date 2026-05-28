@@ -1,4 +1,4 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.chart;
 
 import android.graphics.Color;
 
@@ -10,7 +10,7 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.tradingsim.client.domain.model.TradingAsset;
 
 import java.util.ArrayList;
-
+import java.math.BigDecimal;
 public class TradingChartRenderer
         implements ChartRenderer {
 
@@ -21,10 +21,10 @@ public class TradingChartRenderer
 
         ArrayList<Entry> entries = new ArrayList<>();
 
-        float[] prices = asset.getChartPrices();
+        BigDecimal[] prices = asset.getChartPrices();
 
         for (int i = 0; i < prices.length; i++) {
-            entries.add(new Entry(i, prices[i]));
+            entries.add(new Entry(i, prices[i].floatValue()));
         }
 
         LineDataSet dataSet = new LineDataSet(entries, asset.getSymbol());

@@ -1,4 +1,4 @@
-package com.tradingsim.client.data.repository;
+package com.tradingsim.client.data.repository.trading;
 
 import com.tradingsim.client.data.local.TradingAssetsProvider;
 import com.tradingsim.client.domain.model.TradingAsset;

@@ -1,4 +1,4 @@
-package com.tradingsim.client.data.repository;
+package com.tradingsim.client.data.repository.history;
 
 import com.tradingsim.client.domain.model.Transaction;
 

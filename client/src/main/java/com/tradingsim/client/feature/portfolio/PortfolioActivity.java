@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tradingsim.client.R;
-import com.tradingsim.client.data.repository.InMemoryPortfolioRepository;
-import com.tradingsim.client.data.repository.PortfolioRepository;
+import com.tradingsim.client.data.repository.portfolio.InMemoryPortfolioRepository;
+import com.tradingsim.client.data.repository.portfolio.PortfolioRepository;
 import com.tradingsim.client.domain.model.PortfolioAsset;
 
 import java.math.BigDecimal;

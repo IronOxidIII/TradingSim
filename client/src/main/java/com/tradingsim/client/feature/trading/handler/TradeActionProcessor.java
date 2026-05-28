@@ -1,4 +1,4 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.handler;
 
 import android.content.Context;
 

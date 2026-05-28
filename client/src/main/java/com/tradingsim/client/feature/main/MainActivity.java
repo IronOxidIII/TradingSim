@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.tradingsim.client.feature.history.HistoryActivity;
 import com.tradingsim.client.feature.portfolio.PortfolioActivity;
 import com.tradingsim.client.R;
-import com.tradingsim.client.feature.trading.TradingActivity;
+import com.tradingsim.client.feature.trading.ui.TradingActivity;
 
 public class MainActivity extends AppCompatActivity {
 

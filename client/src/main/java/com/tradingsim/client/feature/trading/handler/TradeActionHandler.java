@@ -1,7 +1,9 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.handler;
 
 import android.content.Context;
 import android.widget.Toast;
+
+import com.tradingsim.client.feature.trading.service.TradeActionService;
 
 public class TradeActionHandler implements TradeActionProcessor {
 

@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.tradingsim.client.domain.model.TransactionType;
 import com.tradingsim.client.R;
 import com.tradingsim.client.domain.model.Transaction;
 
@@ -38,7 +39,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         Transaction transaction = transactions.get(position);
 
-        holder.tvType.setText(transaction.getType());
+        holder.tvType.setText(
+                transaction.getType() == TransactionType.BUY
+                        ? "ПОКУПКА"
+                        : "ПРОДАЖА"
+        );
         holder.tvAmount.setText(
                 holder.itemView.getContext().getString(
                         R.string.transaction_amount,

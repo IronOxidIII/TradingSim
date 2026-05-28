@@ -7,13 +7,13 @@ public class TradingAsset {
     private final String symbol;
     private final String displaySymbol;
     private final BigDecimal price;
-    private final float[] chartPrices;
+    private final BigDecimal[] chartPrices;
 
     public TradingAsset(
             String symbol,
             String displaySymbol,
             BigDecimal price,
-            float[] chartPrices
+            BigDecimal[] chartPrices
     ) {
         this.symbol = symbol;
         this.displaySymbol = displaySymbol;
@@ -33,7 +33,7 @@ public class TradingAsset {
         return price;
     }
 
-    public float[] getChartPrices() {
+    public BigDecimal[] getChartPrices() {
         return chartPrices;
     }
 }

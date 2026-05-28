@@ -1,4 +1,4 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;

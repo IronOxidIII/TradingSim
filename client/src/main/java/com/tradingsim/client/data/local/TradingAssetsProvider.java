@@ -34,7 +34,15 @@ public class TradingAssetsProvider {
                         ETH_USDT,
                         ETH_USDT,
                         new BigDecimal("3500"),
-                        new float[]{3200, 3300, 3400, 3350, 3450, 3500, 3480}
+                        new BigDecimal[]{
+                                new BigDecimal("3200"),
+                                new BigDecimal("3300"),
+                                new BigDecimal("3400"),
+                                new BigDecimal("3350"),
+                                new BigDecimal("3450"),
+                                new BigDecimal("3500"),
+                                new BigDecimal("3480")
+                        }
                 );
 
             case SOL_USDT:
@@ -42,7 +50,15 @@ public class TradingAssetsProvider {
                         SOL_USDT,
                         SOL_USDT,
                         new BigDecimal("140"),
-                        new float[]{120, 125, 130, 128, 135, 140, 138}
+                        new BigDecimal[]{
+                                new BigDecimal("120"),
+                                new BigDecimal("125"),
+                                new BigDecimal("130"),
+                                new BigDecimal("128"),
+                                new BigDecimal("135"),
+                                new BigDecimal("140"),
+                                new BigDecimal("138")
+                        }
                 );
 
             case BNB_USDT:
@@ -50,7 +66,15 @@ public class TradingAssetsProvider {
                         BNB_USDT,
                         BNB_USDT,
                         new BigDecimal("600"),
-                        new float[]{560, 575, 590, 580, 595, 600, 592}
+                        new BigDecimal[]{
+                                new BigDecimal("560"),
+                                new BigDecimal("575"),
+                                new BigDecimal("590"),
+                                new BigDecimal("580"),
+                                new BigDecimal("595"),
+                                new BigDecimal("600"),
+                                new BigDecimal("592")
+                        }
                 );
 
             case XRP_USDT:
@@ -58,7 +82,15 @@ public class TradingAssetsProvider {
                         XRP_USDT,
                         XRP_USDT,
                         new BigDecimal("0.62"),
-                        new float[]{0.55f, 0.57f, 0.60f, 0.58f, 0.61f, 0.62f, 0.60f}
+                        new BigDecimal[]{
+                                new BigDecimal("0.55"),
+                                new BigDecimal("0.57"),
+                                new BigDecimal("0.60"),
+                                new BigDecimal("0.58"),
+                                new BigDecimal("0.61"),
+                                new BigDecimal("0.62"),
+                                new BigDecimal("0.60")
+                        }
                 );
 
             case DOGE_USDT:
@@ -66,7 +98,15 @@ public class TradingAssetsProvider {
                         DOGE_USDT,
                         DOGE_USDT,
                         new BigDecimal("0.15"),
-                        new float[]{0.11f, 0.12f, 0.13f, 0.12f, 0.14f, 0.15f, 0.145f}
+                        new BigDecimal[]{
+                                new BigDecimal("0.11"),
+                                new BigDecimal("0.12"),
+                                new BigDecimal("0.13"),
+                                new BigDecimal("0.12"),
+                                new BigDecimal("0.14"),
+                                new BigDecimal("0.15"),
+                                new BigDecimal("0.145")
+                        }
                 );
 
             case BTC_USDT:
@@ -75,7 +115,15 @@ public class TradingAssetsProvider {
                         BTC_USDT,
                         BTC_USDT,
                         new BigDecimal("65000"),
-                        new float[]{62000, 62500, 63000, 62800, 64000, 65000, 64500}
+                        new BigDecimal[]{
+                                new BigDecimal("62000"),
+                                new BigDecimal("62500"),
+                                new BigDecimal("63000"),
+                                new BigDecimal("62800"),
+                                new BigDecimal("64000"),
+                                new BigDecimal("65000"),
+                                new BigDecimal("64500")
+                        }
                 );
         }
     }

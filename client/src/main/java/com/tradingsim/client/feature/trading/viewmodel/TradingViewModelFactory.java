@@ -1,10 +1,10 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.viewmodel;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.tradingsim.client.data.repository.TradingRepository;
+import com.tradingsim.client.data.repository.trading.TradingRepository;
 
 public class TradingViewModelFactory
         implements ViewModelProvider.Factory {

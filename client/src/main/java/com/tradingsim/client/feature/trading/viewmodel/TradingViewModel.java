@@ -1,10 +1,10 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.viewmodel;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.tradingsim.client.data.repository.TradingRepository;
+import com.tradingsim.client.data.repository.trading.TradingRepository;
 import com.tradingsim.client.domain.model.TradingAsset;
 
 import java.util.List;

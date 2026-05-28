@@ -1,7 +1,10 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.service;
+
+import com.tradingsim.client.feature.trading.handler.TradeActionResult;
 
 import java.math.BigDecimal;
-
+import java.util.Arrays;
+import java.util.List;
 public class TradeActionService {
     private static final String DEFAULT_LEVERAGE = "1";
     private static final String EMPTY_AMOUNT_MESSAGE = "Введите количество";
@@ -9,7 +12,8 @@ public class TradeActionService {
     private static final String POSITIVE_AMOUNT_MESSAGE = "Количество должно быть больше 0";
     private static final String INVALID_LEVERAGE_MESSAGE = "Некорректное плечо";
     private static final String AVAILABLE_LEVERAGE_MESSAGE = "Доступное плечо: 1, 2, 5, 10";
-
+    private static final List<Integer> AVAILABLE_LEVERAGES =
+            Arrays.asList(1, 2, 5, 10);
     public TradeActionResult process(
             String type,
             String asset,
@@ -44,12 +48,7 @@ public class TradeActionService {
             return new TradeActionResult(false, INVALID_LEVERAGE_MESSAGE);
         }
 
-        if (
-                leverageValue != 1 &&
-                        leverageValue != 2 &&
-                        leverageValue != 5 &&
-                        leverageValue != 10
-        ) {
+        if (!AVAILABLE_LEVERAGES.contains(leverageValue)) {
             return new TradeActionResult(false, AVAILABLE_LEVERAGE_MESSAGE);
         }
 

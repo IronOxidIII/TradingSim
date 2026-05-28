@@ -1,4 +1,4 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.chart;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.tradingsim.client.domain.model.TradingAsset;

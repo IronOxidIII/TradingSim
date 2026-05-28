@@ -1,4 +1,4 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.handler;
 
 public class TradeActionResult {
 

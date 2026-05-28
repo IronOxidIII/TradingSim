@@ -12,7 +12,7 @@
             android:label="Портфель" />
 
         <activity
-            android:name=".feature.trading.TradingActivity"
+            android:name=".feature.trading.ui.TradingActivity"
             android:label="Торговля" />
 
         <activity

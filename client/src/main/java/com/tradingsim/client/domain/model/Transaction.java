@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 
 public class Transaction {
 
-    private final String type;
+    private final TransactionType type;
     private final BigDecimal amount;
     private final BigDecimal price;
     private final LocalDateTime dateTime;
 
     public Transaction(
-            String type,
+            TransactionType type,
             BigDecimal amount,
             BigDecimal price,
             LocalDateTime dateTime
@@ -22,7 +22,7 @@ public class Transaction {
         this.dateTime = dateTime;
     }
 
-    public String getType() {
+    public TransactionType getType() {
         return type;
     }
 

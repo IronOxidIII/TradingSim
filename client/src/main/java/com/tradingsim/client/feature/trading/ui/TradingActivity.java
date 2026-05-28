@@ -1,8 +1,7 @@
-package com.tradingsim.client.feature.trading;
+package com.tradingsim.client.feature.trading.ui;
 
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextWatcher;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -13,11 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tradingsim.client.core.ui.SimpleTextWatcher;
-import com.tradingsim.client.data.repository.InMemoryTradingRepository;
-import com.tradingsim.client.data.repository.TradingRepository;
+import com.tradingsim.client.data.repository.trading.InMemoryTradingRepository;
+import com.tradingsim.client.data.repository.trading.TradingRepository;
 import com.github.mikephil.charting.charts.LineChart;
 import com.tradingsim.client.R;
 import com.tradingsim.client.domain.model.TradingAsset;
+import com.tradingsim.client.feature.trading.viewmodel.TradingViewModel;
+import com.tradingsim.client.feature.trading.viewmodel.TradingViewModelFactory;
+import com.tradingsim.client.feature.trading.adapter.AssetAdapter;
+import com.tradingsim.client.feature.trading.chart.ChartRenderer;
+import com.tradingsim.client.feature.trading.chart.TradingChartRenderer;
+import com.tradingsim.client.feature.trading.handler.TradeActionHandler;
+import com.tradingsim.client.feature.trading.handler.TradeActionProcessor;
 
 public class TradingActivity extends AppCompatActivity {
 
@@ -115,7 +121,12 @@ public class TradingActivity extends AppCompatActivity {
     }
 
     private void observeViewModel() {
-        viewModel.getSelectedAsset().observe(this, this::updateAsset);
+
+        viewModel.getSelectedAsset().observe(this, assetSymbol -> {
+            if (assetSymbol != null) {
+                updateAsset(assetSymbol);
+            }
+        });
 
         viewModel.getAmount().observe(this, value -> {
             if (!etAmount.getText().toString().equals(value)) {
@@ -134,20 +145,29 @@ public class TradingActivity extends AppCompatActivity {
         TradingAsset asset = viewModel.getAssetBySymbol(assetSymbol);
 
         tvSelectedAsset.setText(asset.getDisplaySymbol());
+
         tvAssetPrice.setText(
                 getString(
                         R.string.trading_asset_price,
                         asset.getPrice().toString()
                 )
         );
+
         chartRenderer.render(lineChart, asset);
     }
 
     private void handleTradeAction(String type) {
+
+        String selectedAsset = viewModel.getSelectedAsset().getValue();
+
+        if (selectedAsset == null) {
+            return;
+        }
+
         tradeActionHandler.handle(
                 this,
                 type,
-                viewModel.getSelectedAsset().getValue(),
+                selectedAsset,
                 viewModel.getAmount().getValue(),
                 viewModel.getLeverage().getValue()
         );
