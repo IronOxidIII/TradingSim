@@ -2,6 +2,7 @@ package com.tradingsim.service.portfolio;
 
 import com.tradingsim.config.MoneyConfig;
 import com.tradingsim.exception.ConflictException;
+import com.tradingsim.exception.InsufficientFundsException;
 import com.tradingsim.exception.NotFoundException;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Asset;
@@ -39,7 +40,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public Portfolio createPortfolio(int userId, BigDecimal startSum) {
         if (userId <= 0) {
-            throw new IllegalArgumentException("User id must be positive");
+            throw new ValidationException("User id must be positive");
         }
 
         if (userRepository.findById(userId).isEmpty()) {
@@ -78,7 +79,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     public Portfolio getPortfolioByUserId(int userId) {
         return portfolioRepository.findByUserId(userId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new NotFoundException(
                                 "Portfolio for user id " +
                                         userId +
                                         " does not exist"
@@ -99,7 +100,7 @@ public class PortfolioServiceImpl implements PortfolioService {
             BigDecimal amount
     ) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException(
+            throw new ValidationException(
                     "Amount must be positive"
             );
         }
@@ -108,7 +109,7 @@ public class PortfolioServiceImpl implements PortfolioService {
 
         Asset asset = assetRepository.findById(assetId)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new NotFoundException(
                                 "Asset with id " +
                                         assetId +
                                         " does not exist"
@@ -144,7 +145,7 @@ public class PortfolioServiceImpl implements PortfolioService {
             BigDecimal amount
     ) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException(
+            throw new ValidationException(
                     "Amount must be positive"
             );
         }
@@ -156,12 +157,12 @@ public class PortfolioServiceImpl implements PortfolioService {
                 .filter(pa -> pa.getAssetId() == assetId)
                 .findFirst()
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new NotFoundException(
                                 "Asset not found in portfolio"
                         ));
 
         if (existingAsset.getAmount().compareTo(amount) < 0) {
-            throw new IllegalArgumentException(
+            throw new InsufficientFundsException(
                     "Not enough assets to remove"
             );
         }
@@ -179,7 +180,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public synchronized void decreaseCash(int userId, BigDecimal amount) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException(
+            throw new ValidationException(
                     "Amount must be positive"
             );
         }
@@ -187,7 +188,7 @@ public class PortfolioServiceImpl implements PortfolioService {
         Portfolio portfolio = getPortfolioByUserId(userId);
 
         if (portfolio.getCashBalance().compareTo(amount) < 0) {
-            throw new IllegalArgumentException(
+            throw new InsufficientFundsException(
                     "Not enough cash balance"
             );
         }
@@ -201,7 +202,7 @@ public class PortfolioServiceImpl implements PortfolioService {
     @Override
     public synchronized void increaseCash(int userId, BigDecimal amount) {
         if (amount == null || amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Amount must be positive");
+            throw new ValidationException("Amount must be positive");
         }
 
         Portfolio portfolio = getPortfolioByUserId(userId);
@@ -230,7 +231,7 @@ public class PortfolioServiceImpl implements PortfolioService {
             PriceHistory latestPrice = history.stream()
                     .max(Comparator.comparing(PriceHistory::getDateTime))
                     .orElseThrow(() ->
-                            new IllegalStateException(
+                            new NotFoundException(
                                     "No price history for asset"
                             ));
 

@@ -1,5 +1,7 @@
 package com.tradingsim.service.user;
 
+import com.tradingsim.exception.NotFoundException;
+import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.User;
 import com.tradingsim.repository.UserRepository;
 
@@ -15,7 +17,7 @@ public class UserServiceImpl implements UserService{
 
     public User createUser(String username) {
         if (username == null || username.isBlank()) {
-            throw new IllegalArgumentException("Username must not be empty");
+            throw new ValidationException("Username must not be empty");
         }
 
         User user = new User();
@@ -27,7 +29,7 @@ public class UserServiceImpl implements UserService{
     public User getUserById(int id) {
         return userRepository.findById(id)
                 .orElseThrow(() ->
-                        new IllegalArgumentException(
+                        new NotFoundException(
                                 "User with id " +
                                         id +
                                         " does not exist"
@@ -40,7 +42,7 @@ public class UserServiceImpl implements UserService{
 
     public User updateUsername(int id, String newUsername) {
         if (newUsername == null || newUsername.isBlank()) {
-            throw new IllegalArgumentException("Username must not be empty");
+            throw new ValidationException("Username must not be empty");
         }
 
         User user = getUserById(id);
