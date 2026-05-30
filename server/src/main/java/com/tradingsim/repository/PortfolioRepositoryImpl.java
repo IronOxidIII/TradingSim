@@ -1,7 +1,7 @@
 package com.tradingsim.repository;
 
-import com.tradingsim.common.dto.dto.portfolio.PortfolioAssetDto;
-import com.tradingsim.common.dto.dto.portfolio.PortfolioDto;
+import com.tradingsim.common.dto.portfolio.PortfolioAssetDto;
+import com.tradingsim.common.dto.portfolio.PortfolioDto;
 import com.tradingsim.exception.NotFoundException;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Portfolio;

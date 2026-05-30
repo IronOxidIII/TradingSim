@@ -3,8 +3,8 @@ package com.tradingsim.handlers;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.tradingsim.common.dto.dto.asset.AssetDto;
-import com.tradingsim.common.dto.dto.asset.AssetsResponseDto;
+import com.tradingsim.common.dto.asset.AssetDto;
+import com.tradingsim.common.dto.asset.AssetsResponseDto;
 import com.tradingsim.repository.AssetRepositoryImpl;
 
 import java.io.IOException;

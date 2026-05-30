@@ -1,7 +1,7 @@
 package com.tradingsim.client.network;
 
 import com.google.gson.Gson;
-import com.tradingsim.common.dto.dto.portfolio.PortfoliosResponseDto;
+import com.tradingsim.common.dto.portfolio.PortfoliosResponseDto;
 
 import java.util.HashMap;
 import java.util.Map;

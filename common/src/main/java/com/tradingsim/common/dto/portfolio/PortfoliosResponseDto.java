@@ -1,4 +1,4 @@
-package com.tradingsim.common.dto.dto.portfolio;
+package com.tradingsim.common.dto.portfolio;
 
 import java.util.List;
 

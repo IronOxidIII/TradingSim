@@ -1,7 +1,7 @@
 package com.tradingsim.repository;
 
-import com.tradingsim.common.dto.dto.asset.AssetDto;
-import com.tradingsim.common.dto.dto.asset.PriceHistoryDto;
+import com.tradingsim.common.dto.asset.AssetDto;
+import com.tradingsim.common.dto.asset.PriceHistoryDto;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Asset;
 import com.tradingsim.repository.base.AbstractInMemoryRepository;

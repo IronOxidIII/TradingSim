@@ -1,4 +1,4 @@
-package com.tradingsim.common.dto.dto.asset;
+package com.tradingsim.common.dto.asset;
 
 import java.time.LocalDateTime;
 
