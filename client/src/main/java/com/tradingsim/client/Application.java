@@ -8,10 +8,10 @@ public class Application extends android.app.Application {
 
     @Override
     public void onCreate() {
-        super.onCreate();
-        new MainActivity();
-
         Timber.plant();
         Timber.i("Application is starting");
+
+        super.onCreate();
+        new MainActivity();
     }
 }
