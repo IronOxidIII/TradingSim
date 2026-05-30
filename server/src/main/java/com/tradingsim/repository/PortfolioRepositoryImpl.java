@@ -1,11 +1,15 @@
 package com.tradingsim.repository;
 
+import com.tradingsim.common.dto.dto.portfolio.PortfolioAssetDto;
+import com.tradingsim.common.dto.dto.portfolio.PortfolioDto;
 import com.tradingsim.exception.NotFoundException;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Portfolio;
+import com.tradingsim.model.PortfolioAsset;
 import com.tradingsim.repository.base.AbstractInMemoryRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -95,5 +99,31 @@ public class PortfolioRepositoryImpl
         if (portfolio.getCashBalance().compareTo(BigDecimal.ZERO) < 0) {
             throw new ValidationException("Cash balance must not be negative");
         }
+    }
+
+    public List<PortfolioDto> toPortfoliosDtoList() {
+        var portfolios = super.findAll();
+        List<PortfolioDto> result = new ArrayList<>();
+
+        for (var portfolio : portfolios) {
+            List<PortfolioAsset> portfolioAssets = portfolio.getPortfolioAssets();
+            List<PortfolioAssetDto> portfolioAssetDtos = new ArrayList<>();
+            for (var portfolioAsset : portfolioAssets) {
+                portfolioAssetDtos.add(
+                        new PortfolioAssetDto(
+                                portfolioAsset.getAssetId(),
+                                portfolioAsset.getAmount().toString()
+                        )
+                );
+            }
+
+            result.add(new PortfolioDto(
+                    1,
+                    10_000,
+                    10_000,
+                    portfolioAssetDtos));
+        }
+
+        return result;
     }
 }

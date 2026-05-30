@@ -1,6 +1,12 @@
 package com.tradingsim.client.domain.model;
 
+import android.os.Build;
+
+import com.tradingsim.client.network.dto.asset.AssetDto;
+import com.tradingsim.client.network.dto.portfolio.PortfolioAssetDto;
+
 import java.math.BigDecimal;
+import java.util.List;
 
 public class PortfolioAsset {
 

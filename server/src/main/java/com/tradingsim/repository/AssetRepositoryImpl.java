@@ -1,9 +1,14 @@
 package com.tradingsim.repository;
 
+import com.tradingsim.common.dto.dto.asset.AssetDto;
+import com.tradingsim.common.dto.dto.asset.PriceHistoryDto;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Asset;
 import com.tradingsim.repository.base.AbstractInMemoryRepository;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,6 +66,23 @@ public class AssetRepositoryImpl extends AbstractInMemoryRepository<Asset>
             throw new ValidationException("Invalid id");
         }
         super.delete(id);
+    }
+
+    public List<AssetDto> toAssetDtoList() {
+        var assets = super.findAll();
+        List<AssetDto> result = new ArrayList<>();
+        for (var asset : assets) {
+            List<PriceHistoryDto> priceHistoryDto = new ArrayList<>();
+            priceHistoryDto.add(
+                    new PriceHistoryDto(LocalDateTime.MIN, "10", 50));
+
+            result.add(new AssetDto(
+                    asset.getId(),
+                    asset.getName(),
+                    priceHistoryDto));
+        }
+
+        return result;
     }
 
     private void validate(Asset asset) {
