@@ -1,10 +1,8 @@
 package com.tradingsim.model;
 
-import com.tradingsim.common.dto.dto.portfolio.PortfolioAssetDto;
 import com.tradingsim.config.MoneyConfig;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 public class PortfolioAsset {
 

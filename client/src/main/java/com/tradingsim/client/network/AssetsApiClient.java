@@ -3,12 +3,9 @@ package com.tradingsim.client.network;
 import com.google.gson.Gson;
 import com.tradingsim.common.dto.dto.asset.AssetsResponseDto;
 
-import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import okhttp3.Response;
 import timber.log.Timber;
 
 public class AssetsApiClient {

@@ -1,9 +1,7 @@
 package com.tradingsim.client.network;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Map;
-import java.util.logging.Logger;
 
 import okhttp3.Call;
 import okhttp3.Callback;

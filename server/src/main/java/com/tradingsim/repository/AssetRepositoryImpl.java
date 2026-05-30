@@ -6,7 +6,6 @@ import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Asset;
 import com.tradingsim.repository.base.AbstractInMemoryRepository;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
