@@ -8,21 +8,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tradingsim.client.R;
-import com.tradingsim.client.data.repository.portfolio.InMemoryPortfolioRepository;
+import com.tradingsim.client.data.repository.portfolio.NetworkPortfolioRepository;
 import com.tradingsim.client.data.repository.portfolio.PortfolioRepository;
 import com.tradingsim.client.domain.model.PortfolioAsset;
+import com.tradingsim.client.network.Callback;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
+import java.util.List;
+
+import timber.log.Timber;
 
 public class PortfolioActivity extends AppCompatActivity {
-
-    private final PortfolioRepository repository =
-            new InMemoryPortfolioRepository();
-
     private TextView tvPortfolioValue;
     private RecyclerView recyclerPortfolio;
-    private ArrayList<PortfolioAsset> assets;
+
+    private NetworkPortfolioRepository repository = new NetworkPortfolioRepository();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,23 +32,37 @@ public class PortfolioActivity extends AppCompatActivity {
         tvPortfolioValue = findViewById(R.id.tvPortfolioValue);
         recyclerPortfolio = findViewById(R.id.recyclerPortfolio);
 
-        assets = new ArrayList<>(repository.getPortfolioAssets());
-
-        BigDecimal totalValue = BigDecimal.ZERO;
-
-        for (PortfolioAsset asset : assets) {
-            totalValue = totalValue.add(asset.getTotalValue());
-        }
-
-        tvPortfolioValue.setText(
-                getString(
-                        R.string.portfolio_value,
-                        totalValue.toString()
-                )
-        );
-
-        PortfolioAdapter adapter = new PortfolioAdapter(assets);
+        PortfolioAdapter adapter = new PortfolioAdapter();
         recyclerPortfolio.setLayoutManager(new LinearLayoutManager(this));
         recyclerPortfolio.setAdapter(adapter);
+
+        new Thread(() -> {
+            repository.getPortfolioAssetsWithCallback(
+                    new Callback<>() {
+                @Override
+                public void onComplete(List<PortfolioAsset> result) {
+                    runOnUiThread(() -> {
+                        adapter.submitList(result);
+
+                        BigDecimal totalValue = BigDecimal.ZERO;
+                        for (var asset : result) {
+                            totalValue = totalValue.add(asset.getTotalValue());
+                        }
+
+                        tvPortfolioValue.setText(
+                                getString(
+                                        R.string.portfolio_value,
+                                        totalValue.toString()
+                                )
+                        );
+                    });
+                }
+
+                @Override
+                public void onError(Exception e) {
+                    Timber.i("Failed updating assets.");
+                }
+            });
+        }).start();
     }
 }

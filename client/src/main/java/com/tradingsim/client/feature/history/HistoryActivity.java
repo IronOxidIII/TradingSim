@@ -13,6 +13,8 @@ import com.tradingsim.client.domain.model.Transaction;
 
 import java.util.ArrayList;
 
+import timber.log.Timber;
+
 public class HistoryActivity extends AppCompatActivity {
 
     private RecyclerView recyclerTransactions;
@@ -22,6 +24,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Timber.plant();
+        Timber.i("Entering History Screen");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history);
 
