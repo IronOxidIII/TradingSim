@@ -26,61 +26,15 @@ import java.util.logging.Logger;
 
 public class StartUpInitializer {
 
-    private UserRepository userRepository;
-    private AssetRepositoryImpl assetRepository;
-    private PortfolioRepositoryImpl portfolioRepository;
-    private PriceHistoryRepository priceHistoryRepository;
-    private TransactionRepository transactionRepository;
+    public static final UserRepository userRepository = new UserRepositoryImpl();
+    public static final AssetRepositoryImpl assetRepository = new AssetRepositoryImpl();
+    public static final PortfolioRepositoryImpl portfolioRepository = new PortfolioRepositoryImpl();
+    public static final PriceHistoryRepository priceHistoryRepository = new PriceHistoryRepositoryImpl();
+    public static final TransactionRepository transactionRepository = new TransactionRepositoryImpl();
 
     private static final Logger log = Logger.getLogger(StartUpInitializer.class.getName());
 
-    public UserRepository getUserRepository() {
-        return this.userRepository;
-    }
-
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
-    public AssetRepositoryImpl getAssetRepository() {
-        return assetRepository;
-    }
-
-    public void setAssetRepository(AssetRepositoryImpl assetRepository) {
-        this.assetRepository = assetRepository;
-    }
-
-    public PortfolioRepositoryImpl getPortfolioRepository() {
-        return portfolioRepository;
-    }
-
-    public void setPortfolioRepository(PortfolioRepositoryImpl portfolioRepository) {
-        this.portfolioRepository = portfolioRepository;
-    }
-
-    public PriceHistoryRepository getPriceHistoryRepository() {
-        return priceHistoryRepository;
-    }
-
-    public void setPriceHistoryRepository(PriceHistoryRepository priceHistoryRepository) {
-        this.priceHistoryRepository = priceHistoryRepository;
-    }
-
-    public TransactionRepository getTransactionRepository() {
-        return transactionRepository;
-    }
-
-    public void setTransactionRepository(TransactionRepository transactionRepository) {
-        this.transactionRepository = transactionRepository;
-    }
-
     public void Initialize() {
-        userRepository = new UserRepositoryImpl();
-        assetRepository = new AssetRepositoryImpl();
-        portfolioRepository = new PortfolioRepositoryImpl();
-        priceHistoryRepository = new PriceHistoryRepositoryImpl();
-        transactionRepository = new TransactionRepositoryImpl();
-
         MarketService marketService = new MarketServiceImpl(
                 assetRepository,
                 priceHistoryRepository
@@ -128,7 +82,7 @@ public class StartUpInitializer {
 
         marketService.refreshAllPrices();
 
-        //tradingService.sellAsset(1, 1, BigDecimal.valueOf(1));
+        tradingService.sellAsset(1, 1, BigDecimal.valueOf(1));
 
         marketService.refreshAllPrices();
 

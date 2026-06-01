@@ -1,5 +1,6 @@
 package com.tradingsim;
 
+import com.tradingsim.initialize.ConfigInitializer;
 import com.tradingsim.initialize.HttpServerInitializer;
 import com.tradingsim.initialize.StartUpInitializer;
 
@@ -11,11 +12,19 @@ public class TradingSimApplication {
 
     public static void main(String[] args) {
         StartUpInitializer startUpInitializer = new StartUpInitializer();
-        startUpInitializer.Initialize();
+        ConfigInitializer configInitializer = new ConfigInitializer();
+        configInitializer.initializeTestData(
+                StartUpInitializer.assetRepository,
+                StartUpInitializer.portfolioRepository,
+                StartUpInitializer.priceHistoryRepository,
+                StartUpInitializer.transactionRepository,
+                StartUpInitializer.userRepository
+        );
 
         HttpServerInitializer httpServerInitializer = new HttpServerInitializer(
-                startUpInitializer.getAssetRepository(),
-                startUpInitializer.getPortfolioRepository()
+                StartUpInitializer.assetRepository,
+                StartUpInitializer.portfolioRepository,
+                configInitializer.getPort()
         );
         httpServerInitializer.Initialize();
     }

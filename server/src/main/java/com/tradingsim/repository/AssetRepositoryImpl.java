@@ -73,7 +73,7 @@ public class AssetRepositoryImpl extends AbstractInMemoryRepository<Asset>
         for (var asset : assets) {
             List<PriceHistoryDto> priceHistoryDto = new ArrayList<>();
             priceHistoryDto.add(
-                    new PriceHistoryDto(LocalDateTime.MIN, "10", 50));
+                    new PriceHistoryDto(LocalDateTime.MIN.toString(), "10", 50));
 
             result.add(new AssetDto(
                     asset.getId(),

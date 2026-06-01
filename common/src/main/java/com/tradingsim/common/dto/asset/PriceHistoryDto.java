@@ -4,24 +4,24 @@ import java.time.LocalDateTime;
 
 public class PriceHistoryDto {
 
-    private LocalDateTime time;
+    private String time;
     private String price;
     private int volume;
 
     public PriceHistoryDto() {
     }
 
-    public PriceHistoryDto(LocalDateTime time, String price, int volume) {
+    public PriceHistoryDto(String time, String price, int volume) {
         this.time = time;
         this.price = price;
         this.volume = volume;
     }
 
-    public LocalDateTime getTime() {
+    public String getTime() {
         return time;
     }
 
-    public void setTime(LocalDateTime time) {
+    public void setTime(String time) {
         this.time = time;
     }
 

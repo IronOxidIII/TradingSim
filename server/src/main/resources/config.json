@@ -1,0 +1,88 @@
+{
+  "port": 8888,
+  "testData": {
+    "assets": [
+      {
+        "id": 1,
+        "name": "BTC",
+        "price_history": [
+          {
+            "time": "2026-06-01T00:00:00",
+            "price": "10000.000000",
+            "volume": 100
+          }
+        ]
+      },
+      {
+        "id": 2,
+        "name": "ETH",
+        "price_history": [
+          {
+            "time": "2026-06-01T00:00:00",
+            "price": "5000.000000",
+            "volume": 100
+          }
+        ]
+      }
+    ],
+
+    "users": [
+      {
+        "id": 1,
+        "username": "user1",
+        "portfolio": {
+          "user_id": 1,
+          "start_sum": 10000,
+          "total_sum": 10000,
+          "portfolio_assets": [
+            {
+              "asset_id": 1,
+              "amount": 1
+            },
+            {
+              "asset_id": 2,
+              "amount": 3
+            }
+          ]
+        }
+      }
+    ],
+
+    "transactions": [
+      {
+        "user_id": 1,
+        "asset_id": 1,
+        "sum": "10000.000000",
+        "asset_price": "10000.000000",
+        "datetime": "2026-06-01T00:00:00",
+        "amount": "1.000000"
+      },
+      {
+        "user_id": 1,
+        "asset_id": 2,
+        "sum": "15000.000000",
+        "asset_price": "5000.000000",
+        "datetime": "2026-06-01T00:00:10",
+        "amount": "3.000000"
+      }
+    ],
+
+    "portfolios": [
+      {
+        "user_id": 1,
+        "start_sum": 10000,
+        "total_sum": "25000.000000",
+        "portfolio_assets": [
+          {
+            "asset_id": 1,
+            "amount": 1
+          },
+          {
+            "asset_id": 2,
+            "amount": 2
+          }
+        ]
+      }
+    ]
+  }
+}

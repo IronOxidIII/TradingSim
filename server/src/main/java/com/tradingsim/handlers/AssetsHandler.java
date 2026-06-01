@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.tradingsim.common.dto.asset.AssetDto;
 import com.tradingsim.common.dto.asset.AssetsResponseDto;
+import com.tradingsim.repository.AssetRepository;
 import com.tradingsim.repository.AssetRepositoryImpl;
 
 import java.io.IOException;
@@ -14,13 +15,13 @@ import java.util.*;
 import java.util.logging.Logger;
 
 public class AssetsHandler implements HttpHandler {
-    private final List<AssetDto> assets;
+    private AssetRepositoryImpl assetRepository;
 
     private final Gson gson = new Gson();
     private static final Logger log = Logger.getLogger(AssetsHandler.class.getName());
 
-    public AssetsHandler(AssetRepositoryImpl assets) {
-        this.assets = assets.toAssetDtoList();
+    public AssetsHandler(AssetRepositoryImpl assetRepository) {
+        this.assetRepository = assetRepository;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class AssetsHandler implements HttpHandler {
             AssetsResponseDto response =
                     new AssetsResponseDto();
 
-            response.setAssets(assets);
+            response.setAssets(assetRepository.toAssetDtoList());
 
              json = gson.toJson(response);
             log.info("Json response: " + json);

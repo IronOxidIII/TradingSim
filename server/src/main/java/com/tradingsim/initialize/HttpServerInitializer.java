@@ -18,22 +18,25 @@ public class HttpServerInitializer {
     private final PortfolioRepositoryImpl portfolioRepository;
     private static HttpServer server = null;
     private static ExecutorService executor;
+    private int port;
 
     private static final Logger log = Logger.getLogger(HttpServerInitializer.class.getName());
 
     public HttpServerInitializer(
             AssetRepositoryImpl assetRepository,
-            PortfolioRepositoryImpl portfolioRepository
+            PortfolioRepositoryImpl portfolioRepository,
+            int port
     ) {
         this.assetRepository = assetRepository;
         this.portfolioRepository = portfolioRepository;
+        this.port = port;
     }
 
     public void Initialize() {
         executor = Executors.newFixedThreadPool(10);
 
         try {
-            server = HttpServer.create(new InetSocketAddress(8888), 0);
+            server = HttpServer.create(new InetSocketAddress(port), 0);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -50,7 +53,7 @@ public class HttpServerInitializer {
         );
 
         server.start();
-        log.info("Server started on port 8888");
+        log.info("Server started on port %d".formatted(port));
 
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             server.stop(1);
