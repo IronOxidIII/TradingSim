@@ -128,7 +128,7 @@
   }
   ```
 
-#### /Users
+### /Users
 - GET = Получить список всех пользователей
   - ?id с определенным id
   - ?username с определенным username
@@ -182,7 +182,7 @@
   }
   ```
 
-#### /Users/id
+### /Users/id
 - GET = Получить пользователя с id = id
 - PUT = Изменить имя пользователя с id
   - BODY: 
@@ -225,7 +225,7 @@
   }
   ```
 
-#### /Portfolios
+### /Portfolios
 - GET = Получить все портфели
   - ?id с определенным id
   - ?start_sum с определенной суммой старта
@@ -273,7 +273,7 @@
   }
   ```
 
-#### /Portfolios/user_id
+### /Portfolios/user_id
 - GET = Получить портфель по id пользователя
   - RESPONSE_BODY:
   ```json lines
@@ -305,7 +305,7 @@
   }
   ```
   
-#### /Portfolio_assets/Portfolio_id
+### /Portfolio_assets/Portfolio_id
 - GET = Получить активы портфеля по id
   - RESPONSE_BODY:
     ```json lines
@@ -326,7 +326,7 @@
   }
   ```
   
-#### /Transactions
+### /Transactions
 - GET = Получить все транзакции
   - ?id с определенным id
   - ?asset_id с определенным id актива
