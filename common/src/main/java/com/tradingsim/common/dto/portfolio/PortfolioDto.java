@@ -6,7 +6,7 @@ public class PortfolioDto {
 
     private int user_id;
     private int start_sum;
-    private double total_sum;
+    private String total_sum;
 
     private List<PortfolioAssetDto> portfolio_assets;
 
@@ -16,7 +16,7 @@ public class PortfolioDto {
     public PortfolioDto(
             int user_id,
             int start_sum,
-            double total_sum,
+            String total_sum,
             List<PortfolioAssetDto> portfolio_assets
     ) {
         this.user_id = user_id;
@@ -41,11 +41,11 @@ public class PortfolioDto {
         this.start_sum = start_sum;
     }
 
-    public double getTotal_sum() {
+    public String getTotal_sum() {
         return total_sum;
     }
 
-    public void setTotal_sum(double total_sum) {
+    public void setTotal_sum(String total_sum) {
         this.total_sum = total_sum;
     }
 
