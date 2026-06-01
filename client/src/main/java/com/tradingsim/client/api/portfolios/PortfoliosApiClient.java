@@ -1,6 +1,7 @@
-package com.tradingsim.client.network;
+package com.tradingsim.client.api.portfolios;
 
 import com.google.gson.Gson;
+import com.tradingsim.client.network.HttpClient;
 import com.tradingsim.common.dto.portfolio.PortfoliosResponseDto;
 
 import java.util.HashMap;
@@ -11,6 +12,10 @@ import timber.log.Timber;
 public class PortfoliosApiClient {
 
     private static final Gson gson = new Gson();
+
+    public PortfoliosApiClient() {
+        Timber.plant();
+    }
 
     public static void getPortfolios(
             String serverHost,

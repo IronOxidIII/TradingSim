@@ -3,9 +3,9 @@ package com.tradingsim.client.data.repository.portfolio;
 import android.os.Build;
 
 import com.tradingsim.client.domain.model.PortfolioAsset;
-import com.tradingsim.client.network.AssetsApiClient;
+import com.tradingsim.client.api.assets.AssetsApiClient;
 import com.tradingsim.client.network.Callback;
-import com.tradingsim.client.network.PortfoliosApiClient;
+import com.tradingsim.client.api.portfolios.PortfoliosApiClient;
 import com.tradingsim.common.dto.asset.AssetDto;
 import com.tradingsim.common.dto.asset.AssetsResponseDto;
 import com.tradingsim.common.dto.portfolio.PortfolioAssetDto;
