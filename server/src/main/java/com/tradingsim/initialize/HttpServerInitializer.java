@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 
 public class HttpServerInitializer {
 
-    private final AssetRepositoryImpl assetRepository;
+    private final AssetRepository assetRepository;
     private final PriceHistoryRepository priceHistoryRepository;
-    private final PortfolioRepositoryImpl portfolioRepository;
+    private final PortfolioRepository portfolioRepository;
     private static HttpServer server = null;
     private static ExecutorService executor;
     private int port;

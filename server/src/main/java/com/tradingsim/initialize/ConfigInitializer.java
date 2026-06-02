@@ -94,6 +94,7 @@ public class ConfigInitializer {
             PriceHistoryRepository priceHistoryRepository,
             TransactionRepository transactionRepository,
             UserRepository userRepository) {
+        logger.info("Initializing Test Data...");
 
         TestDataDto testDataDto = data.getTestData();
         if (testDataDto == null) {
