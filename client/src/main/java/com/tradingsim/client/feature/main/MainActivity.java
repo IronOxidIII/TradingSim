@@ -11,6 +11,8 @@ import com.tradingsim.client.feature.portfolio.PortfolioActivity;
 import com.tradingsim.client.R;
 import com.tradingsim.client.feature.trading.ui.TradingActivity;
 
+import timber.log.Timber;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button btnPortfolio;
@@ -20,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Timber.i("Application is starting");
         setContentView(R.layout.activity_main);
 
         btnPortfolio = findViewById(R.id.btnPortfolio);

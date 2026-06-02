@@ -9,30 +9,28 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.tradingsim.client.R;
+import com.tradingsim.client.data.repository.portfolio.NetworkPortfolioRepository;
+import com.tradingsim.client.data.repository.portfolio.PortfolioRepository;
 import com.tradingsim.client.domain.model.PortfolioAsset;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.PortfolioViewHolder> {
 
-    private final List<PortfolioAsset> assets;
-
-    public PortfolioAdapter(List<PortfolioAsset> assets) {
-        this.assets = assets;
-    }
+    private static List<PortfolioAsset> portfolioAssets = new ArrayList<>();
 
     @NonNull
     @Override
     public PortfolioViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_portfolio_asset, parent, false);
-
         return new PortfolioViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull PortfolioViewHolder holder, int position) {
-        PortfolioAsset asset = assets.get(position);
+        PortfolioAsset asset = portfolioAssets.get(position);
 
         holder.tvAssetName.setText(asset.getSymbol());
         holder.tvAssetAmount.setText(holder.itemView.getContext().getString(
@@ -51,7 +49,12 @@ public class PortfolioAdapter extends RecyclerView.Adapter<PortfolioAdapter.Port
 
     @Override
     public int getItemCount() {
-        return assets.size();
+        return portfolioAssets == null ? 0 : portfolioAssets.size();
+    }
+
+    public void submitList(List<PortfolioAsset> portfolioAssets) {
+        this.portfolioAssets = portfolioAssets;
+        notifyDataSetChanged();
     }
 
     static class PortfolioViewHolder extends RecyclerView.ViewHolder {

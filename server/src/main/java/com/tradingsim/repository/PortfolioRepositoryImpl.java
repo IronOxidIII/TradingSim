@@ -1,11 +1,15 @@
 package com.tradingsim.repository;
 
+import com.tradingsim.common.dto.portfolio.PortfolioAssetDto;
+import com.tradingsim.common.dto.portfolio.PortfolioDto;
 import com.tradingsim.exception.NotFoundException;
 import com.tradingsim.exception.ValidationException;
 import com.tradingsim.model.Portfolio;
+import com.tradingsim.model.PortfolioAsset;
 import com.tradingsim.repository.base.AbstractInMemoryRepository;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 

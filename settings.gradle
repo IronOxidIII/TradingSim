@@ -5,3 +5,4 @@ plugins {
 rootProject.name = 'TradingSim'
 include 'server'
 include 'client'
+include ':common'

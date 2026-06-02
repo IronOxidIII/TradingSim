@@ -1,0 +1,71 @@
+package com.tradingsim.initialize;
+
+import com.sun.net.httpserver.HttpServer;
+import com.tradingsim.handlers.AssetsHandler;
+import com.tradingsim.handlers.PortfoliosHandler;
+import com.tradingsim.repository.AssetRepository;
+import com.tradingsim.repository.AssetRepositoryImpl;
+import com.tradingsim.repository.PortfolioRepository;
+import com.tradingsim.repository.PortfolioRepositoryImpl;
+import com.tradingsim.repository.PriceHistoryRepository;
+
+import java.io.IOException;
+import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+
+public class HttpServerInitializer {
+
+    private final AssetRepository assetRepository;
+    private final PriceHistoryRepository priceHistoryRepository;
+    private final PortfolioRepository portfolioRepository;
+    private static HttpServer server = null;
+    private static ExecutorService executor;
+    private int port;
+
+    private static final Logger log = Logger.getLogger(HttpServerInitializer.class.getName());
+
+    public HttpServerInitializer(
+            AssetRepository assetRepository,
+            PriceHistoryRepository priceHistoryRepository,
+            PortfolioRepository portfolioRepository,
+            int port
+    ) {
+        this.assetRepository = assetRepository;
+        this.priceHistoryRepository = priceHistoryRepository;
+        this.portfolioRepository = portfolioRepository;
+        this.port = port;
+    }
+
+    public void Initialize() {
+        executor = Executors.newFixedThreadPool(10);
+
+        try {
+            server = HttpServer.create(new InetSocketAddress(port), 0);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        server.setExecutor(executor);
+
+        server.createContext(
+                "/Assets",
+                new AssetsHandler(
+                        assetRepository,
+                        priceHistoryRepository)
+        );
+
+        server.createContext(
+                "/Portfolios",
+                new PortfoliosHandler(portfolioRepository)
+        );
+
+        server.start();
+        log.info("Server started on port %d".formatted(port));
+
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            server.stop(1);
+            executor.shutdown();
+        }));
+    }
+}

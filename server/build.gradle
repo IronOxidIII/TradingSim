@@ -3,6 +3,10 @@ plugins {
     id 'application'
 }
 
+application {
+    mainClass = 'com.tradingsim.TradingSimApplication'
+}
+
 group = 'com.tradingsim'
 version = '1.0-SNAPSHOT'
 
@@ -11,8 +15,13 @@ repositories {
 }
 
 dependencies {
-    testImplementation platform('org.junit:junit-bom:6.0.3')
+    testImplementation platform('org.junit:junit-bom:6.1.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    implementation project(":common")
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.21.3'
+    implementation 'jakarta.servlet:jakarta.servlet-api:6.1.0'
+    implementation 'com.google.code.gson:gson:2.14.0'
 }
 
 test {
@@ -21,4 +30,9 @@ test {
 
 application {
     mainClass = 'com.tradingsim.TradingSimApplication'
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
