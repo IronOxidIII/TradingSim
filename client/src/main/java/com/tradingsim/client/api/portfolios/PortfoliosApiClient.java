@@ -1,6 +1,6 @@
 package com.tradingsim.client.api.portfolios;
 
-import com.google.gson.Gson;
+import com.tradingsim.client.network.Callback;
 import com.tradingsim.client.network.HttpClient;
 import com.tradingsim.common.dto.portfolio.PortfoliosResponseDto;
 
@@ -11,70 +11,45 @@ import timber.log.Timber;
 
 public class PortfoliosApiClient {
 
-    private static final Gson gson = new Gson();
-
     public PortfoliosApiClient() {
         Timber.plant();
     }
 
-    public static void getPortfolios(
+    public static void sendGetPortfolioRequest(
             String serverHost,
             int serverPort,
-            Integer id,
-            Integer startSum,
-            Double totalSumLess,
-            Double totalSumMore,
-            PortfoliosResponseCallback callback
+            GetPortfoliosRequest request,
+            Callback<PortfoliosResponseDto> callback
     ) {
-        Map<String, String> params = new HashMap<>();
-
-        if (id != null) {
-            params.put("id", id.toString());
-        }
-
-        if (startSum != null) {
-            params.put("startSum", startSum.toString());
-        }
-
-        if (totalSumLess != null) {
-            params.put("totalSumLess", totalSumLess.toString());
-        }
-
-        if (totalSumMore != null) {
-            params.put("totalSumMore", totalSumMore.toString());
-        }
+        Map<String, String> params = mapStringParams(request);
 
         HttpClient.get(
                 "http://" + serverHost + ":" + serverPort + "/Portfolios",
                 params,
-                new HttpClient.HttpCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        Timber.d("Received response: %s", response);
-                        PortfoliosResponseDto portfoliosResponseDto;
-                        try {
-                            portfoliosResponseDto =
-                                    gson.fromJson(response, PortfoliosResponseDto.class);
-                        } catch (Exception e) {
-                            Timber.e(e, "Error converting response of /Portfolios");
-                            callback.onError(e);
-                            return;
-                        }
-
-                        Timber.i("Successfully converted response of /Portfolios");
-
-                        callback.onSuccess(portfoliosResponseDto);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Timber.e(e);
-                    }
-                });
+                PortfoliosResponseDto.class,
+                callback
+        );
     }
 
-    public interface PortfoliosResponseCallback {
-        void onSuccess(PortfoliosResponseDto portfoliosResponseDto);
-        void onError(Exception e);
+    private static Map<String, String> mapStringParams(GetPortfoliosRequest request) {
+        Map<String, String> params = new HashMap<>();
+
+        if (request.getId() != null) {
+            params.put("id", request.getId().toString());
+        }
+
+        if (request.getStartSum() != null) {
+            params.put("startSum", request.getStartSum().toString());
+        }
+
+        if (request.getTotalSumLess() != null) {
+            params.put("totalSumLess", request.getTotalSumLess().toString());
+        }
+
+        if (request.getTotalSumMore() != null) {
+            params.put("totalSumMore", request.getTotalSumMore().toString());
+        }
+
+        return params;
     }
 }

@@ -40,7 +40,7 @@ public class PortfolioActivity extends AppCompatActivity {
             repository.getPortfolioAssetsWithCallback(
                     new Callback<>() {
                 @Override
-                public void onComplete(List<PortfolioAsset> result) {
+                public void onSuccess(List<PortfolioAsset> result) {
                     runOnUiThread(() -> {
                         adapter.submitList(result);
 

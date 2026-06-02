@@ -40,7 +40,7 @@ public class PortfoliosHandler implements HttpHandler {
             response.setPortfolios(convertPortfoliosToDtos(portfolioRepository.findAll()));
 
             json = gson.toJson(response);
-
+            log.info("Json response: " + json);
             exchange.getResponseHeaders().add(
                     "Content-Type",
                     "application/json"

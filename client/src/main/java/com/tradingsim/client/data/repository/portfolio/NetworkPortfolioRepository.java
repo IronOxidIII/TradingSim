@@ -1,7 +1,7 @@
 package com.tradingsim.client.data.repository.portfolio;
 
-import android.os.Build;
-
+import com.tradingsim.client.api.assets.GetAssetsRequest;
+import com.tradingsim.client.api.portfolios.GetPortfoliosRequest;
 import com.tradingsim.client.domain.model.PortfolioAsset;
 import com.tradingsim.client.api.assets.AssetsApiClient;
 import com.tradingsim.client.network.Callback;
@@ -52,18 +52,20 @@ public class NetworkPortfolioRepository implements PortfolioRepository {
         }
 
         this.portfolioAssets = result;
-        callback.onComplete(result);
+        callback.onSuccess(result);
     }
 
     private void getAssets(Callback<List<PortfolioAsset>> callback) {
         AssetsApiClient.sendGetAssetsRequest(
                 "10.0.2.2",
                 8888,
-                null,
-                null,
-                null,
-                null,
-                new AssetsApiClient.AssetsResponseCallback() {
+                new GetAssetsRequest.Builder()
+                        .id(null)
+                        .name(null)
+                        .page(null)
+                        .perPage(null)
+                        .build(),
+                new Callback<AssetsResponseDto>() {
                     @Override
                     public void onSuccess(AssetsResponseDto assetsResponseDto) {
                         assetDtos = assetsResponseDto.getAssets();
@@ -80,14 +82,16 @@ public class NetworkPortfolioRepository implements PortfolioRepository {
     }
 
     private void getPortfolios(Callback<List<PortfolioAsset>> callback) {
-        PortfoliosApiClient.getPortfolios(
+        PortfoliosApiClient.sendGetPortfolioRequest(
                 "10.0.2.2",
                 8888,
-                null,
-                null,
-                null,
-                null,
-                new PortfoliosApiClient.PortfoliosResponseCallback() {
+                new GetPortfoliosRequest.Builder()
+                        .id(null)
+                        .startSum(null)
+                        .totalSumLess(null)
+                        .totalSumMore(null)
+                        .build(),
+                new Callback<PortfoliosResponseDto>() {
                     @Override
                     public void onSuccess(PortfoliosResponseDto portfoliosResponseDto) {
                         portfolioDtos = portfoliosResponseDto.getPortfolios();
@@ -114,12 +118,12 @@ public class NetworkPortfolioRepository implements PortfolioRepository {
 
         BigDecimal amount = new BigDecimal(portfolioAssetDto.getAmount());
 
-        BigDecimal price = new BigDecimal("0");
+        BigDecimal price = BigDecimal.ZERO;
         for (var a : assetDtos) {
             if (a.getId() == portfolioAssetDto.getAsset_id()) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.VANILLA_ICE_CREAM) {
-                    price = new BigDecimal(a.getPrice_history().getLast().getPrice());
-                }
+                var assetPriceHistory = a.getPrice_history();
+                var aPrice = assetPriceHistory.get(assetPriceHistory.size() - 1).getPrice();
+                price = new BigDecimal(aPrice);
                 break;
             }
         }

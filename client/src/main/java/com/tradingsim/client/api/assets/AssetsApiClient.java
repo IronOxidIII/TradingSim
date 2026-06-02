@@ -1,77 +1,49 @@
 package com.tradingsim.client.api.assets;
 
-import com.google.gson.Gson;
+import com.tradingsim.client.network.Callback;
 import com.tradingsim.client.network.HttpClient;
 import com.tradingsim.common.dto.asset.AssetsResponseDto;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import timber.log.Timber;
-
 public class AssetsApiClient {
-
-    private static final Gson gson = new Gson();
 
     public static void sendGetAssetsRequest(
             String serverHost,
             int serverPort,
-            Integer id,
-            String name,
-            Integer page,
-            Integer perPage,
-            AssetsResponseCallback callback
+            GetAssetsRequest request,
+            Callback<AssetsResponseDto> callback
     ) {
-        Map<String, String> params = new HashMap<>();
-
-        if (id != null) {
-            params.put("id", id.toString());
-        }
-
-        if (name != null) {
-            params.put("name", name);
-        }
-
-        if (page != null) {
-            params.put("name", name);
-        }
-
-        if (perPage != null) {
-            params.put("perPage", perPage.toString());
-        }
+        Map<String, String> params = mapStringParams(request);
 
         HttpClient.get(
                 "http://" + serverHost + ":" + serverPort + "/Assets",
                 params,
-                new HttpClient.HttpCallback() {
-                    @Override
-                    public void onSuccess(String response) {
-                        Timber.i("Starting converting response of /Assets...");
-                        AssetsResponseDto assetsResponseDto;
-                        try {
-                            assetsResponseDto =
-                                    gson.fromJson(response, AssetsResponseDto.class);
-                        } catch (Exception e) {
-                            Timber.e(e, "Error converting response of /Assets");
-                            callback.onError(e);
-                            return;
-                        }
-
-                        Timber.i("Successfully converted response of /Assets");
-
-                        callback.onSuccess(assetsResponseDto);
-                    }
-
-                    @Override
-                    public void onError(Exception e) {
-                        Timber.e(e, "Received bad response of /Assets.");
-                        callback.onError(e);
-                    }
-                });
+                AssetsResponseDto.class,
+                callback
+        );
     }
 
-    public interface AssetsResponseCallback {
-        void onSuccess(AssetsResponseDto assetsResponseDto);
-        void onError(Exception e);
+    private static Map<String, String> mapStringParams(GetAssetsRequest request) {
+        Map<String, String> params = new HashMap<>();
+
+        if (request.getId() != null) {
+            params.put("id", request.getId().toString());
+        }
+
+        if (request.getName() != null) {
+            params.put("name", request.getName());
+        }
+
+        if (request.getPage() != null) {
+            params.put("page", request.getPage().toString());
+        }
+
+        if (request.getPerPage() != null) {
+            params.put("perPage", request.getPerPage().toString());
+        }
+
+        return params;
     }
 }
