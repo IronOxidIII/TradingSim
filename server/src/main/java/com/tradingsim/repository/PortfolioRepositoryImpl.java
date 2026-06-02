@@ -100,30 +100,4 @@ public class PortfolioRepositoryImpl
             throw new ValidationException("Cash balance must not be negative");
         }
     }
-
-    public List<PortfolioDto> toPortfoliosDtoList() {
-        var portfolios = super.findAll();
-        List<PortfolioDto> result = new ArrayList<>();
-
-        for (var portfolio : portfolios) {
-            List<PortfolioAsset> portfolioAssets = portfolio.getPortfolioAssets();
-            List<PortfolioAssetDto> portfolioAssetDtos = new ArrayList<>();
-            for (var portfolioAsset : portfolioAssets) {
-                portfolioAssetDtos.add(
-                        new PortfolioAssetDto(
-                                portfolioAsset.getAssetId(),
-                                portfolioAsset.getAmount().toString()
-                        )
-                );
-            }
-
-            result.add(new PortfolioDto(
-                    1,
-                    10_000,
-                    10_000,
-                    portfolioAssetDtos));
-        }
-
-        return result;
-    }
 }

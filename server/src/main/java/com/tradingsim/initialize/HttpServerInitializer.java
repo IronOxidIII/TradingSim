@@ -3,8 +3,11 @@ package com.tradingsim.initialize;
 import com.sun.net.httpserver.HttpServer;
 import com.tradingsim.handlers.AssetsHandler;
 import com.tradingsim.handlers.PortfoliosHandler;
+import com.tradingsim.repository.AssetRepository;
 import com.tradingsim.repository.AssetRepositoryImpl;
+import com.tradingsim.repository.PortfolioRepository;
 import com.tradingsim.repository.PortfolioRepositoryImpl;
+import com.tradingsim.repository.PriceHistoryRepository;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -15,6 +18,7 @@ import java.util.logging.Logger;
 public class HttpServerInitializer {
 
     private final AssetRepositoryImpl assetRepository;
+    private final PriceHistoryRepository priceHistoryRepository;
     private final PortfolioRepositoryImpl portfolioRepository;
     private static HttpServer server = null;
     private static ExecutorService executor;
@@ -23,11 +27,13 @@ public class HttpServerInitializer {
     private static final Logger log = Logger.getLogger(HttpServerInitializer.class.getName());
 
     public HttpServerInitializer(
-            AssetRepositoryImpl assetRepository,
-            PortfolioRepositoryImpl portfolioRepository,
+            AssetRepository assetRepository,
+            PriceHistoryRepository priceHistoryRepository,
+            PortfolioRepository portfolioRepository,
             int port
     ) {
         this.assetRepository = assetRepository;
+        this.priceHistoryRepository = priceHistoryRepository;
         this.portfolioRepository = portfolioRepository;
         this.port = port;
     }
@@ -44,7 +50,9 @@ public class HttpServerInitializer {
 
         server.createContext(
                 "/Assets",
-                new AssetsHandler(assetRepository)
+                new AssetsHandler(
+                        assetRepository,
+                        priceHistoryRepository)
         );
 
         server.createContext(

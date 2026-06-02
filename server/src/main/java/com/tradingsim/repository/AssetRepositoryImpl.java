@@ -67,23 +67,6 @@ public class AssetRepositoryImpl extends AbstractInMemoryRepository<Asset>
         super.delete(id);
     }
 
-    public List<AssetDto> toAssetDtoList() {
-        var assets = super.findAll();
-        List<AssetDto> result = new ArrayList<>();
-        for (var asset : assets) {
-            List<PriceHistoryDto> priceHistoryDto = new ArrayList<>();
-            priceHistoryDto.add(
-                    new PriceHistoryDto(LocalDateTime.MIN.toString(), "10", 50));
-
-            result.add(new AssetDto(
-                    asset.getId(),
-                    asset.getName(),
-                    priceHistoryDto));
-        }
-
-        return result;
-    }
-
     private void validate(Asset asset) {
         if (asset == null) {
             throw new ValidationException("Asset must not be null");
