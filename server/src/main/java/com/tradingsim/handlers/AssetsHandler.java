@@ -9,6 +9,7 @@ import com.tradingsim.common.dto.asset.AssetDto;
 import com.tradingsim.common.dto.asset.AssetsResponseDto;
 import com.tradingsim.common.dto.asset.PriceHistoryDto;
 import com.tradingsim.constants.Errors;
+import com.tradingsim.http.HttpService;
 import com.tradingsim.model.Asset;
 import com.tradingsim.model.PriceHistory;
 import com.tradingsim.repository.AssetRepository;
@@ -49,7 +50,7 @@ public class AssetsHandler implements HttpHandler {
             );
         } catch (Exception e) {
             log.warning(Errors.getErrorMessage(Errors.ErrorCreatingResponse, e.getMessage()));
-            sendResponse(exchange, 500, "Internal Error.");
+            HttpService.sendInternalErrorResponse(exchange);
             return;
         }
 
